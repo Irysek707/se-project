@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Haulage.Control;
+using Haulage.Model;
+using Haulage.Model.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace Haulage;
 
@@ -14,6 +17,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
+        DB DB = new DB();
 
 #if DEBUG
 		builder.Logging.AddDebug();
