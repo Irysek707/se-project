@@ -16,7 +16,12 @@ public partial class MainPage : ContentPage
 
 	private void GoToCustomerPage(object sender, EventArgs e)
 	{
-        App.Current.MainPage = new NavigationPage(new CustomerPage(MockResources.mockUser));
+        App.Current.MainPage = new NavigationPage(new CustomerPage(MockResources.mockCustomer));
+    }
+
+    private void GoToDriverPage(object sender, EventArgs e)
+    {
+        App.Current.MainPage = new NavigationPage(new DriverPage(MockResources.mockDriver));
     }
 }
 

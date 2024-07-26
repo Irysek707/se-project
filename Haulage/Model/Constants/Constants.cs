@@ -17,5 +17,7 @@ namespace Haulage.Model.Constants
 
         public static string DatabasePath =>
             Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
+
+        public const string NO_DRIVER_ALLOCATED = "None";
     }
 }

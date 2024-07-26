@@ -6,16 +6,16 @@ namespace Haulage.Model
     public class Item
     {
        
-        public string name { get; set; }
+        public string Name { get; set; }
         [PrimaryKey]
-        public string code { get; set; }
-        public double price { get; set; }
+        public string Code { get; set; }
+        public double Price { get; set; }
 
         public Item(string code, string name, double price)
         {
-            this.code = code;
-            this.name = name;
-            this.price = price;
+            this.Code = code;
+            this.Name = name;
+            this.Price = price;
             if (!DBHelpers.EnterToDB(this))
             {
             //    throw new Exception("Something went wrong adding an item");

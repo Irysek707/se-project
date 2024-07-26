@@ -10,10 +10,10 @@ namespace Haulage.Model
     public class CustomerOrder
     {
         [ForeignKey(typeof(Manifest))]
-        public Guid manifestId { get; set; }
+        public Guid ManifestId { get; set; }
 
         [ForeignKey(typeof(User))]
-        public string customer { get; set; }
+        public string Customer { get; set; }
 
         public Manifest Manifest { get { return this.manifest; } }
         private Manifest manifest {  get; set; }
@@ -24,15 +24,21 @@ namespace Haulage.Model
         public Guid Id { get { return id; } set { this.id = value; } }
         private Guid id  { get; set;}
         public Status Status { get { return status; } set { this.status = value; } }
+
+        [ForeignKey(typeof(Warehouse))]
+
+        public Guid WarehouseId { get; set; }
+
         private Status status { get; set; }
 
-        public CustomerOrder(Manifest manifest, string user)
+        public CustomerOrder(Manifest manifest, string user, Guid warehouseId)
         {
             this.manifest = manifest;
-            this.customer = user;
-            this.manifestId = manifest.id;
+            this.Customer = user;
+            this.ManifestId = manifest.Id;
             this.id = Guid.NewGuid();
             this.status = Status.PENDING;
+            this.WarehouseId = warehouseId;
             DBHelpers.EnterToDB(this);
         }
 

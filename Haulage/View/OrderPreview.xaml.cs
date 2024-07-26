@@ -13,11 +13,11 @@ public partial class OrderPreview : ContentPage
         OrderId.Text = "Currently viewing Order " + orderToPreview.Id;
         order = orderToPreview;
         Items.ItemsSource = orderToPreview.Manifest.Items;
-        Total.Text = "Total for this order is " + orderToPreview.Manifest.total;
+        Total.Text = "Total for this order is " + orderToPreview.Manifest.Total;
         if(orderToPreview.Handover != null)
         {
-            string pickup = String.Format("Your {0} is scheduled for {1}", "pickup", orderToPreview.Handover.expectedHandover);
-            string deliver = String.Format("Your {0} is scheduled for {1}", "delivery", orderToPreview.Handover.expectedHandover);
+            string pickup = String.Format("Your {0} is scheduled for {1}", "pickup", orderToPreview.Handover.ExpectedHandover);
+            string deliver = String.Format("Your {0} is scheduled for {1}", "delivery", orderToPreview.Handover.ExpectedHandover);
             HandoverDate.Text = orderToPreview.Handover.Pickup ? pickup : deliver;
         }
         if(orderToPreview.Status == Model.Constants.Status.PENDING)
@@ -39,7 +39,7 @@ public partial class OrderPreview : ContentPage
             try
             {
                 Handover handover = CustomerController.ScheduleHandover(order, DatePicker.Date+TimePicker.Time, true);
-                await DisplayAlert("Pickup scheduled", handover.expectedHandover.ToString(),"Accept");
+                await DisplayAlert("Pickup scheduled", handover.ExpectedHandover.ToString(),"Accept");
                 order.AddHandover(handover);
                 App.Current.MainPage = new NavigationPage(new OrderPreview(order));
             }

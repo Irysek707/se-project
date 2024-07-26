@@ -9,10 +9,10 @@ public partial class CustomerPage : ContentPage
 	public CustomerPage(User user)
 	{
 		InitializeComponent();
-		UserName.Text = "Currently logged in as " + user.login;
+		UserName.Text = "Currently logged in as " + user.Login;
 		try
 		{
-			List<CustomerOrder> orders = CustomerController.GetAllOrders(user.login);
+			List<CustomerOrder> orders = CustomerController.GetAllOrders(user.Login);
 			Orders.ItemsSource = orders;
         }
 		catch (Exception ex)

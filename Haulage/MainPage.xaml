@@ -18,17 +18,19 @@
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
 
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
-            <Button
+      <Button
                 x:Name="CustomerBtn"
-                Text="Go to customerPage"
+                Text="Go to Customer Page"
                 SemanticProperties.Hint="Redirects you to the customer page to do customer actions"
                 Clicked="GoToCustomerPage"
+                 HorizontalOptions="Fill" />
+
+            <Button
+                x:Name="DriverBtn"
+                Text="Go to Driver Page"
+                SemanticProperties.Hint="Redirects you to the driver page to do driver actions"
+                Clicked="GoToDriverPage"
                  HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>

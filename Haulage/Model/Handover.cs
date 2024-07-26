@@ -7,31 +7,31 @@ namespace Haulage.Model
 {
     public class Handover
     {
-        public DateTime expectedHandover { get; set; }
-        public DateTime actualHandover { get; set; }
+        public DateTime ExpectedHandover { get; set; }
+        public DateTime ActualHandover { get; set; }
 
-        public bool Pickup ;
+        public bool Pickup { get; set; }
 
         [PrimaryKey]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         [ForeignKey(typeof(CustomerOrder))]
-        public Guid orderId { get; set; }
+        public Guid OrderId { get; set; }
 
         public Handover(Guid orderId, DateTime expectedHandover, bool pickup)
         {
-            this.expectedHandover = expectedHandover;
+            this.ExpectedHandover = expectedHandover;
             this.Pickup = pickup;
-            this.id = Guid.NewGuid();
-            this.orderId = orderId;
+            this.Id = Guid.NewGuid();
+            this.OrderId = orderId;
             DBHelpers.EnterToDB(this);
         }
 
         public Handover() { }
 
-        public bool changeActualTime(DateTime actualHandover)
+        public bool ChangeActualTime(DateTime actualHandover)
         {
-            this.actualHandover = actualHandover;
+            this.ActualHandover = actualHandover;
             return DBHelpers.EnterToDB(this);
         }
 

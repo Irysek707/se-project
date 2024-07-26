@@ -11,21 +11,21 @@ namespace Haulage.Model
     public class Manifest
     {
         [PrimaryKey]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         public ManifestItem[] Items { get { return items; } }
         private ManifestItem[] items { get; set; }
-        public double total { get; set; }
+        public double Total { get; set; }
 
         public Manifest(ManifestItem[] items)
         {
-            this.id = Guid.NewGuid();
+            this.Id = Guid.NewGuid();
             this.items = items;
             foreach (ManifestItem item in items)
             {
-                item.setManifestId(this.id);
+                item.setManifestId(this.Id);
             }
-            this.total = this.getTotal();
+            this.Total = this.GetTotal();
             DBHelpers.EnterToDB(this);
         }
 
@@ -36,17 +36,17 @@ namespace Haulage.Model
 
         public Manifest(Guid id, double total, ManifestItem[] items)
         {
-            this.id = id;
+            this.Id = id;
             this.items = items;
-            this.total = total;
+            this.Total = total;
         }
 
 
         public Manifest() { }
 
-        private double getTotal()
+        private double GetTotal()
         {           
-           return Math.Round(items.Select(x => x.getTotal()).Sum(),2);
+           return Math.Round(items.Select(x => x.GetTotal()).Sum(),2);
         }
     }
 }

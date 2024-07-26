@@ -14,25 +14,25 @@ namespace Haulage.Model
     public class ManifestItem
     {
         [PrimaryKey]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         [ForeignKey(typeof(Manifest))]
-        public Guid manifestId { get; set; }
+        public Guid ManifestId { get; set; }
 
         [ForeignKey(typeof(Item))]
 
-        public string itemCode { get; set; }
-        public double Total { get { return this.getTotal(); } }
+        public string ItemCode { get; set; }
+        public double Total { get { return this.GetTotal(); } }
         public Item Item { get { return item; } }
         private Item item { get; set; }
-        public int quantity { get; set; }
+        public int Quantity { get; set; }
 
         public ManifestItem(Item item, int count)
         {
             this.item = item;
-            this.itemCode = item.code;
-            this.quantity = count;
-            this.id = Guid.NewGuid ();
+            this.ItemCode = item.Code;
+            this.Quantity = count;
+            this.Id = Guid.NewGuid ();
             DBHelpers.EnterToDB (this);
 
         }
@@ -41,7 +41,7 @@ namespace Haulage.Model
 
         public bool setManifestId(Guid id)
         {
-            this.manifestId = id;
+            this.ManifestId = id;
             return DBHelpers.UpdateDB (this);
         }
 
@@ -50,21 +50,9 @@ namespace Haulage.Model
             this.item = item;
         }
 
-        public double getTotal()
+        public double GetTotal()
         {
-            return Math.Round(quantity * this.item.price,2);
-        }
-
-        //For testing purposes only, delete later
-        public static ManifestItem[] createSomeItemsForDebug()
-        {
-            return [ new ManifestItem(new Item("4005556151097", "Ravensburger Jigsaw, 100Pieces", 25.39),2),
-            new ManifestItem(new Item("4005556151096", "Ravensburger Jigsaw, 100Pieces", 25.39),3),
-            new ManifestItem(new Item("4005556151095", "Ravensburger Jigsaw, 100Pieces", 25.39),1),
-            new ManifestItem(new Item("1845678901001", "Hobby Paint 250ml", 5.99),1),
-            new ManifestItem(new Item("1845678901002", "Hobby Paint 1L", 13.55), 1),
-            new ManifestItem(new Item("1845678901003", "Hobby Paints 500ml", 8.80), 1)
-                ];
+            return Math.Round(Quantity * this.item.Price,2);
         }
     }
 }

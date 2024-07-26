@@ -23,7 +23,7 @@ namespace Haulage.Control
             {
                 DB.connection.BeginTransaction();
                 SQLiteCommand comm = new SQLiteCommand(DB.connection);
-                comm.CommandText = DBHelpers.FormatSQL("SELECT CustomerOrder.Id,[total], [status]  FROM[CustomerOrder]   JOIN[Manifest] ON CustomerOrder.manifestId = Manifest.id  WHERE customer = '", customer);  
+                comm.CommandText = DBHelpers.FormatSQL("SELECT CustomerOrder.Id,[Total], [Status]  FROM[CustomerOrder]   JOIN[Manifest] ON CustomerOrder.manifestId = Manifest.id  WHERE customer = '", customer);  
                 List<CustomerOrder> orders = comm.ExecuteQuery<CustomerOrder>().ToList();
                 DB.connection.Commit();
                 return orders;
@@ -41,7 +41,7 @@ namespace Haulage.Control
             {
                 DB.connection.BeginTransaction();
                 SQLiteCommand comm = new SQLiteCommand(DB.connection);
-                comm.CommandText = DBHelpers.FormatSQL("SELECT [manifestId],[customer],[id],[status]  FROM [CustomerOrder]  WHERE [id] ='", id);
+                comm.CommandText = DBHelpers.FormatSQL("SELECT [ManifestId],[Customer],[Id],[Status]  FROM [CustomerOrder]  WHERE [Id] ='", id);
                 List<CustomerOrder> list = comm.ExecuteQuery<CustomerOrder>();
                 if (list.Count > 1)
                 {
@@ -49,26 +49,26 @@ namespace Haulage.Control
                 }
                 CustomerOrder order = list[0];
                 comm = new SQLiteCommand(DB.connection);
-                comm.CommandText = DBHelpers.FormatSQL("SELECT [expectedHandover],[actualHandover],[id],[orderId]  FROM [Handover]  WHERE orderId = '", id);
+                comm.CommandText = DBHelpers.FormatSQL("SELECT [ExpectedHandover],[ActualHandover],[Id],[OrderId]  FROM [Handover]  WHERE OrderId = '", id);
                 List<Handover> handovers = comm.ExecuteQuery<Handover>();
                 if (handovers.Count > 0)
                 {
                     order.AddHandover(handovers[0]);
                 }
                 comm = new SQLiteCommand(DB.connection);
-                comm.CommandText = DBHelpers.FormatSQL("SELECT [quantity],[Id], [manifestId], [itemCode]  FROM [ManifestItem] JOIN [Item] ON ManifestItem.itemCode = Item.code WHERE ManifestItem.manifestId = '", order.manifestId.ToString());
+                comm.CommandText = DBHelpers.FormatSQL("SELECT [Quantity],[Id], [ManifestId], [ItemCode]  FROM [ManifestItem] JOIN [Item] ON ManifestItem.ItemCode = Item.Code WHERE ManifestItem.ManifestId = '", order.ManifestId.ToString());
                 List<ManifestItem> manifestItems = comm.ExecuteQuery<ManifestItem>();
                 manifestItems.ForEach(item =>
                 {
                     comm = new SQLiteCommand(DB.connection);
-                    comm.CommandText = DBHelpers.FormatSQL("SELECT[name], [code], [price] FROM[Item] WHERE code = '", item.itemCode);
+                    comm.CommandText = DBHelpers.FormatSQL("SELECT[Name], [Code], [Price] FROM[Item] WHERE Code = '", item.ItemCode);
                     List<Item> items = comm.ExecuteQuery<Item>();
                     item.setItem(items[0]);
                 });
                 comm = new SQLiteCommand(DB.connection);
-                comm.CommandText = DBHelpers.FormatSQL("SELECT total  FROM [Manifest]  WHERE id = '", order.manifestId.ToString());
+                comm.CommandText = DBHelpers.FormatSQL("SELECT Total  FROM [Manifest]  WHERE Id = '", order.ManifestId.ToString());
                 List<Manifest> manifests = comm.ExecuteQuery<Manifest>();
-                list[0].AddManifest(new Manifest(order.manifestId, manifests[0].total, manifestItems.ToArray()));
+                list[0].AddManifest(new Manifest(order.ManifestId, manifests[0].Total, manifestItems.ToArray()));
                 DB.connection.Commit();
                 return list[0];
             }
