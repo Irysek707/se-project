@@ -9,10 +9,17 @@ namespace Haulage.Control
 {
     class DriverController
     {
-        public static List<Trip> GetAllTrips(string login)
+        private string driverLogin;
+
+        public DriverController(string driverLogin)
         {
-            if (login == null) { throw new ArgumentNullException("Please provide a user login to view trips"); }
-            List<Trip> trips = TripController.getAllTripsForDriver(login);
+
+        this.driverLogin = driverLogin; }
+    
+        public List<Trip> GetAllTrips()
+        {
+            if (driverLogin == null) { throw new ArgumentNullException("Please provide a user login to view trips"); }
+            List<Trip> trips = TripController.getAllTripsForDriver(driverLogin);
             if (trips == null || trips.Count == 0) { { throw new Exception("No trips available for the user"); } }
             else { return trips; }
         }

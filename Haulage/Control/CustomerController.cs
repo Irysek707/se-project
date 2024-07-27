@@ -10,10 +10,15 @@ namespace Haulage.Control
 {
     public class CustomerController
     {
-        public static List<CustomerOrder> GetAllOrders(string login)
+        private string customerlogin;
+
+        public CustomerController(string customerLogin) {
+            this.customerlogin = customerLogin;
+        }
+        public List<CustomerOrder> GetAllOrders()
         {
-            if (login == null) { throw new ArgumentNullException("Please provide a user login to view orders"); }
-            List<CustomerOrder> orders = OrderController.GetAllOrdersForCustomer(login);
+            if (customerlogin == null) { throw new ArgumentNullException("Please provide a user login to view orders"); }
+            List<CustomerOrder> orders = OrderController.GetAllOrdersForCustomer(customerlogin);
             if (orders == null || orders.Count == 0) { { throw new Exception("No orders available for the user"); } }
             else { return orders; }
         }

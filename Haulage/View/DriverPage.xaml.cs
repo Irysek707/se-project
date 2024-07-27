@@ -5,13 +5,15 @@ namespace Haulage.View;
 
 public partial class DriverPage : ContentPage
 {
-	public DriverPage(User user)
+	public DriverPage(Driver driver)
 	{
+        
 		InitializeComponent();
-        UserName.Text = "Currently logged in as " + user.Login;
+        UserName.Text = "Currently logged in as " + driver.Login;
+        DriverController controller = new DriverController(driver.Login);
         try
         {
-            List<Trip> trips = DriverController.GetAllTrips(user.Login);
+            List<Trip> trips = controller.GetAllTrips();
             Trips.ItemsSource = trips;
         }
         catch (Exception ex)

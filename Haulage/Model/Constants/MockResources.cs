@@ -12,8 +12,8 @@ namespace Haulage.Model.Constants
     { 
 
         //Placeholder until user implementation
-        public static User mockCustomer = new Customer("customer1");
-        public static User mockDriver = new Driver("driver1");
+        public static Customer mockCustomer = new Customer("customer1");
+        public static Driver mockDriver = new Driver("driver1");
         public static Warehouse warehouse = new Warehouse(12.12, 12.12);
 
         //For testing purposes only, delete later

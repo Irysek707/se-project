@@ -1,18 +1,20 @@
 using Haulage.Control;
 using Haulage.Model;
+using Haulage.Model.Users;
 
 
 namespace Haulage.View;
 
 public partial class CustomerPage : ContentPage
 {
-	public CustomerPage(User user)
+	public CustomerPage(Customer customer)
 	{
 		InitializeComponent();
-		UserName.Text = "Currently logged in as " + user.Login;
+		UserName.Text = "Currently logged in as " + customer.Login;
+		CustomerController controller = new CustomerController(customer.Login);
 		try
 		{
-			List<CustomerOrder> orders = CustomerController.GetAllOrders(user.Login);
+			List<CustomerOrder> orders = controller.GetAllOrders();
 			Orders.ItemsSource = orders;
         }
 		catch (Exception ex)

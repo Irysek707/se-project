@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Haulage.Model
 {
-    class Driver : User
+    public class Driver : User
     {
         public Driver(string login) : base(Role.DRIVER, login)
         {

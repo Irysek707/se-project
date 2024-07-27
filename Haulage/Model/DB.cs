@@ -29,7 +29,7 @@ namespace Haulage
             }
             connection = new SQLiteConnection(databasePath, Constants.Flags);
             //Enable only if you would like a clean install of all database tables
-            cleanup();
+            //cleanup();
 
             connection.CreateTable<User>();
             connection.CreateTable<Warehouse>();
@@ -46,16 +46,21 @@ namespace Haulage
             /// Remember to add new tables for each model class created here
 
             /// Adding mockOrder resources here, disable for production
-            new MockResources().CreateMockResources();
+            //new MockResources().CreateMockResources();
         }
         private void cleanup()
         {
             connection.DropTable<Manifest>();
             connection.DropTable<ManifestItem>();
             connection.DropTable<Item>();
+            connection.DropTable<Warehouse>();
             connection.DropTable<Handover>();
             connection.DropTable<CustomerOrder>();
+
             connection.DropTable<User>();
+            connection.DropTable<DeliveryAddress>();
+            connection.DropTable<TripStop>();
+            connection.DropTable<Trip>();
         }
     }
 
