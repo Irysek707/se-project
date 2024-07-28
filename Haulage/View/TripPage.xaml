@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Haulage.View.TripPage"
+             Title="TripPage">
+    <VerticalStackLayout>
+        <Label x:Name="ErrorMessage"></Label>
+        <Label x:Name="UserName"
+     VerticalOptions="Center" 
+     HorizontalOptions="Center" />
+        <Label x:Name="TripId"
+           VerticalOptions="Center" 
+           HorizontalOptions="Center" >
+        </Label>
+        <Label x:Name="StopCount"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" >
+        </Label>
+        <ListView x:Name="Stops" 
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Address.Latitude}"></Label>
+                            <Label Text="{Binding Address.Longitude}" Margin="10,0,0,0"></Label>
+                            <Label Text="{Binding Order.Id}" Margin="10,0,0,0"></Label>
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label x:Name ="Status" 
+        VerticalOptions="Center" 
+        HorizontalOptions="Center">
+        </Label>
+        <Label x:Name ="ScheduledDuration" 
+     VerticalOptions="Center" 
+     HorizontalOptions="Center">
+        </Label>
+        <Label Margin="0,5,0,0" Text="Drivers" HorizontalOptions="Center"></Label>
+        <ListView x:Name="Drivers" 
+           HorizontalOptions="Center"
+           VerticalOptions="Center">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding Login}"></Label>
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label  Margin="0,5,0,0" Text="Vehicles " HorizontalOptions="Center"></Label>
+        <ListView x:Name="Vehicles" 
+           HorizontalOptions="Center"
+           VerticalOptions="Center">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding Name}"></Label>
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="AllocateDriverBtn" IsEnabled="false" IsVisible="false" Text="Allocate Driver"  Clicked="AllocateDriverBtn_Clicked"></Button>
+        <Button x:Name="AllocateVehicleBtn" IsEnabled="false" IsVisible="false" Text="Allocate Vehicle" Clicked="AllocateVehicleBtn_Clicked"></Button>
+    </VerticalStackLayout>
+</ContentPage>

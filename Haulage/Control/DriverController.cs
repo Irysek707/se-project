@@ -19,7 +19,7 @@ namespace Haulage.Control
         public List<Trip> GetAllTrips()
         {
             if (driverLogin == null) { throw new ArgumentNullException("Please provide a user login to view trips"); }
-            List<Trip> trips = TripController.getAllTripsForDriver(driverLogin);
+            List<Trip> trips = TripController.GetAllTripsForDriver(driverLogin);
             if (trips == null || trips.Count == 0) { { throw new Exception("No trips available for the user"); } }
             else { return trips; }
         }

@@ -1,5 +1,4 @@
-﻿using Haulage.Model.Constants;
-using Haulage.Model.Helpers;
+﻿using Haulage.Model.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Haulage.Model.Users
 {
-    public class Customer : User
+    public class Admin: User
     {
-        public Customer(string login) : base(Role.CUSTOMER, login)
+        public Admin(string login) : base(Constants.Role.ADMIN, login)
         {
         }
     }

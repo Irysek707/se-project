@@ -11,7 +11,7 @@ using ForeignKeyAttribute = SQLiteNetExtensions.Attributes.ForeignKeyAttribute;
 
 namespace Haulage.Model
 {
-    class TripStop
+    public class TripStop
     {
 
         [PrimaryKey] 
@@ -21,7 +21,6 @@ namespace Haulage.Model
         public Guid OrderId { get; set; }
 
         [ForeignKey(typeof(Trip))]
-
         public Guid TripId { get; set; }
 
         [ForeignKey(typeof (DeliveryAddress))]
@@ -33,21 +32,17 @@ namespace Haulage.Model
 
         public DateTime? ExpectedAt;
 
-        public TripStop(CustomerOrder order, DeliveryAddress address, DateTime? expectedAt)
+        public TripStop(CustomerOrder order, DeliveryAddress address)
         {
             this.Id = Guid.NewGuid();
             this.order = order;
             this.OrderId = order.Id;
             this.address = address;
             this.DeliveryAddressId = address.Id;
-            ExpectedAt = expectedAt;
             DBHelpers.EnterToDB(this);
         }
 
-        public TripStop(CustomerOrder order, DeliveryAddress address)
-        {
-            new TripStop(order, address, null);       
-        }
+        public TripStop() { }
 
         public void SetExpected(DateTime expectedAt)
         {
@@ -59,6 +54,19 @@ namespace Haulage.Model
             DBHelpers.UpdateDB(this);
         }
 
-        public TripStop() { }
+        public void  setDeliveryAddress(DeliveryAddress deliveryAddress) { 
+            this.address = deliveryAddress;
+        }
+
+        public void setOrder(CustomerOrder order) { 
+            this.order = order;
+        }
+
+        public bool setTripId(Guid tripId)
+        {
+            this.TripId = tripId;
+            return DBHelpers.UpdateDB(this);
+        }
+       
     }
 }

@@ -10,7 +10,7 @@ using ForeignKeyAttribute = SQLiteNetExtensions.Attributes.ForeignKeyAttribute;
 
 namespace Haulage.Model
 {
-    class DeliveryAddress
+    public class DeliveryAddress
     {
         [PrimaryKey]
         public Guid Id { get; set; }
@@ -19,11 +19,11 @@ namespace Haulage.Model
         public Guid OrderId { get; set; }
 
         //numbers from -180 to 180
-        double Longitude { get; set; }
+        public double Longitude { get; set; }
 
         // numbers from -90 to 90
 
-        double Latitude { get; set; }
+        public double Latitude { get; set; }
 
         public DeliveryAddress() { }
 
