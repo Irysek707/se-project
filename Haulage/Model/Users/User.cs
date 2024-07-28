@@ -6,6 +6,8 @@ using SQLite;
 
 namespace Haulage.Model
 {
+    // This class is intended for basic functionality for the users, so that specific functionality would be added
+    // to individual classes but basic ones, such as login would be here
     public class User
     {
         public Role Role { get; set; }
@@ -18,7 +20,7 @@ namespace Haulage.Model
         /// This could also include an id to allow multiple users with the same name,
         ///however would then require different identification system so out of scope
 
-        protected User(Role role, string login)
+        public User(Role role, string login)
         {
             this.Role = role;
             this.Login = login;
@@ -26,5 +28,6 @@ namespace Haulage.Model
         }
 
         public User() { }
+
     }
 }

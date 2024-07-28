@@ -33,6 +33,7 @@ namespace Haulage
 
             connection.CreateTable<User>();
             connection.CreateTable<Warehouse>();
+            connection.CreateTable<Transport>();
 
             connection.CreateTable<CustomerOrder>();
             connection.CreateTable<Manifest>();
@@ -46,7 +47,7 @@ namespace Haulage
             /// Remember to add new tables for each model class created here
 
             /// Adding mockOrder resources here, disable for production
-            //new MockResources().CreateMockResources();
+           // new MockResources().CreateMockResources();
         }
         private void cleanup()
         {
@@ -54,6 +55,7 @@ namespace Haulage
             connection.DropTable<ManifestItem>();
             connection.DropTable<Item>();
             connection.DropTable<Warehouse>();
+            connection.DropTable<Transport>();
             connection.DropTable<Handover>();
             connection.DropTable<CustomerOrder>();
 

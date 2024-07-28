@@ -22,7 +22,7 @@ namespace Haulage.Model.Helpers
             return true;
         }
 
-        public static TimeSpan CalculateTripDuration(double startLongitude, double startLatitude, List<TripStop> stops)
+        public static TimeSpan CalculateTripDuration(double startLongitude, double startLatitude, TripStop[] stops)
         {
             /// Placeholder here, to leave space in future to implement integration with maps or similar
             return new TimeSpan(2, 20, 0);

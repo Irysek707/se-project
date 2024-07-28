@@ -3,21 +3,26 @@ using Haulage.Model.Helpers;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using ForeignKeyAttribute = SQLiteNetExtensions.Attributes.ForeignKeyAttribute;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Haulage.Model
 {
-    class Trip
+    public class Trip
     {
         [PrimaryKey]
         public Guid Id { get; set; }
 
         public string Driver { get; set; } = Constants.Constants.NO_DRIVER_ALLOCATED;
-        public List<TripStop> Stops { get { return this.stops; } }
-        private List<TripStop> stops;
+        public TripStop[] Stops { get { return this.stops; } }
+        private TripStop[] stops;
         public TimeSpan ScheduledDuration { get; set; }
+
+        [ForeignKey(typeof(Transport))]
+        public Guid VehicleId { get; set; }
         public TripStatus TripStatus { get; set; }
 
         public int NumberOfStops { get; set; }
@@ -29,11 +34,16 @@ namespace Haulage.Model
 
         double StartLatitude { get; set; }
 
-        public Trip(List<TripStop> stops, double startLongitude, double startLatitude) {
+        public Trip(TripStop[] stops, double startLongitude, double startLatitude)
+        {
             OtherHelpers.CheckLongitudeAndLatitude(startLongitude, startLatitude);
             this.Id = Guid.NewGuid();
             this.stops = stops;
-            this.NumberOfStops = stops.Count;
+            foreach (TripStop stop in this.stops)
+            {
+                stop.setTripId(this.Id);
+            }
+            this.NumberOfStops = stops.Length;
             this.TripStatus = TripStatus.SCHEDULED;
             this.StartLongitude = startLongitude;
             this.StartLatitude = startLatitude;
@@ -49,5 +59,33 @@ namespace Haulage.Model
             DBHelpers.UpdateDB(this);
         }
 
+        public bool AllocateVehicle(Transport vehicle)
+        {
+            this.VehicleId = vehicle.Id;
+            vehicle.BookVehicle();
+            return DBHelpers.UpdateDB(this);
+        }
+
+        public void DeallocateDriver()
+        {
+            this.Driver = Constants.Constants.NO_DRIVER_ALLOCATED;
+            DBHelpers.UpdateDB(this);
+        }
+
+        public bool DeallocateVehicle(Transport vehicle)
+        {
+            if (vehicle != null)
+            {
+                this.VehicleId = Guid.Empty;
+                vehicle.UnbookVehicle();
+                return DBHelpers.UpdateDB(this);
+            }
+            return false;
+        }
+
+        public void setStops(List<TripStop> stops)
+        {
+            this.stops = stops.ToArray();
+        }
     }
 }

@@ -5,6 +5,9 @@
              Title="OrderPreview">
     <VerticalStackLayout>
         <Label x:Name="ErrorMessage"></Label>
+        <Label x:Name="UserName"
+     VerticalOptions="Center" 
+     HorizontalOptions="Center" />
         <Label x:Name="OrderId"
             VerticalOptions="Center" 
             HorizontalOptions="Center" >
@@ -28,6 +31,10 @@
          VerticalOptions="Center" 
          HorizontalOptions="Center">
             </Label>
+        <Label x:Name ="Status" 
+  VerticalOptions="Center" 
+  HorizontalOptions="Center">
+        </Label>
         <Label x:Name ="HandoverDate" 
    VerticalOptions="Center" 
    HorizontalOptions="Center">
