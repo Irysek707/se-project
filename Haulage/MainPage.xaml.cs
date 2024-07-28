@@ -1,4 +1,9 @@
-﻿namespace Haulage;
+﻿using Haulage.Control;
+using Haulage.Model;
+using Haulage.Model.Constants;
+using Haulage.View;
+
+namespace Haulage;
 
 public partial class MainPage : ContentPage
 {
@@ -9,16 +14,14 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void GoToCustomerPage(object sender, EventArgs e)
 	{
-		count++;
+        App.Current.MainPage = new NavigationPage(new CustomerPage(MockResources.mockCustomer));
+    }
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+    private void GoToDriverPage(object sender, EventArgs e)
+    {
+        App.Current.MainPage = new NavigationPage(new DriverPage(MockResources.mockDriver));
+    }
 }
 
