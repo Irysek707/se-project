@@ -19,7 +19,7 @@
                 SemanticProperties.HeadingLevel="Level1" />
 
 
-      <Button
+            <Button
                 x:Name="CustomerBtn"
                 Text="Go to Customer Page"
                 SemanticProperties.Hint="Redirects you to the customer page to do customer actions"
@@ -33,11 +33,11 @@
                 Clicked="GoToDriverPage"
                  HorizontalOptions="Fill" />
             <Button
-        x:Name="AdminBtn"
-        Text="Go to Admin Page"
-        SemanticProperties.Hint="Redirects you to the Administrator page to do administrator actions"
-        Clicked="GoToAdminPage"
-         HorizontalOptions="Fill" />
+                x:Name="AdminBtn"
+                Text="Go to Admin Page"
+                SemanticProperties.Hint="Redirects you to the Administrator page to do administrator actions"
+                Clicked="GoToAdminPage"
+                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </ScrollView>
 
