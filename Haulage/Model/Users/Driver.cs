@@ -1,4 +1,5 @@
 ﻿using Haulage.Model.Constants;
+using Haulage.Model.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace Haulage.Model
     {
         public Driver(string login) : base(Role.DRIVER, login)
         {
+            DBHelpers.EnterToDB(this);
         }
+
+        public Driver() { }
     }
 }

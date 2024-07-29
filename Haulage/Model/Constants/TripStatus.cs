@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Haulage.Model.Constants
 {
-    enum TripStatus
+    public enum TripStatus
     {
         SCHEDULED,
         CANCELLED,

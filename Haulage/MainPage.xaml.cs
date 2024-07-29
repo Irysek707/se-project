@@ -23,5 +23,11 @@ public partial class MainPage : ContentPage
     {
         App.Current.MainPage = new NavigationPage(new DriverPage(MockResources.mockDriver));
     }
+
+
+    private void GoToAdminPage(object sender, EventArgs e)
+    {
+        App.Current.MainPage = new NavigationPage(new AdministratorPage(MockResources.mockAdmin));
+    }
 }
 

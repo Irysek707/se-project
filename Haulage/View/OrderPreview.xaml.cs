@@ -1,15 +1,21 @@
 using Haulage.Control;
 using Haulage.Model;
+using Haulage.Model.Users;
 using Microsoft.Maui.Controls;
 
 namespace Haulage.View;
 
 public partial class OrderPreview : ContentPage
 {
-    CustomerOrder order;
-	public OrderPreview(CustomerOrder orderToPreview)
+    private CustomerOrder order;
+    private Customer customer;
+    private CustomerController controller;
+	public OrderPreview(CustomerOrder orderToPreview, Customer customer)
 	{
         InitializeComponent();
+        this.customer = customer;
+        this.controller = new CustomerController(customer.Login);
+        UserName.Text = "Currently logged in as " + customer.Login;
         OrderId.Text = "Currently viewing Order " + orderToPreview.Id;
         order = orderToPreview;
         Items.ItemsSource = orderToPreview.Manifest.Items;
@@ -20,6 +26,7 @@ public partial class OrderPreview : ContentPage
             string deliver = String.Format("Your {0} is scheduled for {1}", "delivery", orderToPreview.Handover.ExpectedHandover);
             HandoverDate.Text = orderToPreview.Handover.Pickup ? pickup : deliver;
         }
+        Status.Text = "Current order status " + orderToPreview.Status;
         if(orderToPreview.Status == Model.Constants.Status.PENDING)
         {
             PickupDate.IsVisible = true;
@@ -38,10 +45,10 @@ public partial class OrderPreview : ContentPage
         {
             try
             {
-                Handover handover = CustomerController.ScheduleHandover(order, DatePicker.Date+TimePicker.Time, true);
+                Handover handover = controller.ScheduleHandover(order, DatePicker.Date+TimePicker.Time, true);
                 await DisplayAlert("Pickup scheduled", handover.ExpectedHandover.ToString(),"Accept");
                 order.AddHandover(handover);
-                App.Current.MainPage = new NavigationPage(new OrderPreview(order));
+                App.Current.MainPage = new NavigationPage(new OrderPreview(order,customer));
             }
             catch (Exception ex)
             {

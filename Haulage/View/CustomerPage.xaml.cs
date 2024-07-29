@@ -7,9 +7,13 @@ namespace Haulage.View;
 
 public partial class CustomerPage : ContentPage
 {
+	private Customer customer;
+	private CustomerController controller;
 	public CustomerPage(Customer customer)
 	{
 		InitializeComponent();
+		this.customer = customer;
+		this.controller = new CustomerController(customer.Login);
 		UserName.Text = "Currently logged in as " + customer.Login;
 		CustomerController controller = new CustomerController(customer.Login);
 		try
@@ -33,8 +37,8 @@ public partial class CustomerPage : ContentPage
 			CustomerOrder order = Orders.SelectedItem as CustomerOrder;
 			try
 			{
-                CustomerOrder orderWithDetails = CustomerController.GetCustomerOrder(order.Id.ToString());
-                App.Current.MainPage = new NavigationPage(new OrderPreview(orderWithDetails));
+                CustomerOrder orderWithDetails = controller.GetCustomerOrder(order.Id.ToString());
+                App.Current.MainPage = new NavigationPage(new OrderPreview(orderWithDetails,customer));
             }
 			catch (Exception ex)
 			{

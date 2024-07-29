@@ -23,12 +23,12 @@ namespace Haulage.Control
             else { return orders; }
         }
 
-        public static CustomerOrder GetCustomerOrder(string id)
+        public CustomerOrder GetCustomerOrder(string id)
         {
             try
             {
                 if (id == null || id == "") { throw new Exception("No id provided"); }
-                CustomerOrder order = OrderController.GetSpecificOrderDetailsForACustomer(id);
+                CustomerOrder order = OrderController.GetSpecificOrderWithDetails(id);
                 if (order == null || order.Manifest == null)
                 {
                     throw new Exception("No order or manifest found");
@@ -41,7 +41,7 @@ namespace Haulage.Control
             }
         }
 
-        public static Handover ScheduleHandover(CustomerOrder order, DateTime handoverDate, bool pickup)
+        public Handover ScheduleHandover(CustomerOrder order, DateTime handoverDate, bool pickup)
         {
             if(handoverDate < DateTime.Now)
             {

@@ -10,6 +10,6 @@ namespace Haulage.Model.Constants
     {
         CUSTOMER,
         DRIVER,
-        MANAGER
+        ADMIN
     }
 }
