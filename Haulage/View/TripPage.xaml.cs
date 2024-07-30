@@ -36,7 +36,6 @@ public partial class TripPage : ContentPage
             AllocateDriverBtn.IsVisible = true;
             AllocateVehicleBtn.IsEnabled = true;
             AllocateVehicleBtn.IsVisible = true;
-            //Drivers.ItemsSource = AdminController.GetAllDriver();
             Vehicles.ItemsSource = AdminController.GetAllVehicles();
         }
     }

@@ -132,7 +132,6 @@ namespace Haulage.Control
                 throw new Exception("Error retrieving drivers: " + e.Message, e);
             }
         }
-
         public static void UpdateDriver(Driver driver)
         {
             try
@@ -142,28 +141,32 @@ namespace Haulage.Control
                     throw new ArgumentNullException(nameof(driver), "Driver cannot be null");
                 }
 
-                if (string.IsNullOrWhiteSpace(driver.Login))
+                string newLogin = driver.Login;
+
+                if (string.IsNullOrWhiteSpace(newLogin))
                 {
                     throw new ArgumentException("Driver Login is not valid");
                 }
 
-                // Retrieve the existing driver by the current login
-                var existingDriver = dbConnection.Query<Driver>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", driver.Login, (int)Role.DRIVER).FirstOrDefault();
+                // Retrieve the existing driver by the old login
+                var existingDriver = dbConnection.Query<User>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", newLogin, (int)Role.DRIVER).FirstOrDefault();
 
                 if (existingDriver == null)
                 {
                     throw new Exception("Driver with the provided Login does not exist.");
                 }
 
-                // Make sure the new Login is not empty and different from the old one
-                if (string.IsNullOrWhiteSpace(driver.Login) || driver.Login == existingDriver.Login)
+                // Check if the new login already exists
+                var existingNewLoginDriver = dbConnection.Query<User>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", newLogin, (int)Role.DRIVER).FirstOrDefault();
+
+                if (existingNewLoginDriver != null)
                 {
-                    throw new ArgumentException("New Driver Login is invalid or the same as the current one.");
+                    throw new Exception("A driver with the new Login already exists.");
                 }
 
-                // Execute the query to update the driver's login
-                var query = "UPDATE [User] SET [Login] = ? WHERE [Login] = ? AND [Role] = ?";
-                var rowsAffected = dbConnection.Execute(query, driver.Login, existingDriver.Login, (int)Role.DRIVER);
+                // Perform the update operation
+                var updateQuery = "UPDATE [User] SET [Login] = ? WHERE [Login] = ? AND [Role] = ?";
+                var rowsAffected = dbConnection.Execute(updateQuery, newLogin, existingDriver.Login, (int)Role.DRIVER);
 
                 if (rowsAffected == 0)
                 {
