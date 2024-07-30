@@ -41,6 +41,9 @@
         <Label x:Name="HandoverDate"
                VerticalOptions="Center" 
                HorizontalOptions="Center" />
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
         <Button x:Name="ConfirmPickup"
                 Text="Confirm Pickup"
                 VerticalOptions="Center"
