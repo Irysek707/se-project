@@ -47,7 +47,7 @@ namespace Haulage
             /// Remember to add new tables for each model class created here
 
             /// Adding mockOrder resources here, disable for production
-           // new MockResources().CreateMockResources();
+           /// new MockResources().CreateMockResources();
         }
         private void cleanup()
         {

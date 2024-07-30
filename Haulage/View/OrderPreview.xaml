@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Haulage.Converters"
              x:Class="Haulage.View.OrderPreview"
              Title="OrderPreview">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <VerticalStackLayout>
         <Label x:Name="ErrorMessage"></Label>
         <Label x:Name="UserName"
-     VerticalOptions="Center" 
-     HorizontalOptions="Center" />
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
         <Label x:Name="OrderId"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" >
-        </Label>
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
         <ListView x:Name="Items" 
                   HorizontalOptions="Center"
                   VerticalOptions="Center">
@@ -27,28 +32,39 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-            <Label x:Name ="Total" 
-         VerticalOptions="Center" 
-         HorizontalOptions="Center">
-            </Label>
-        <Label x:Name ="Status" 
-  VerticalOptions="Center" 
-  HorizontalOptions="Center">
-        </Label>
-        <Label x:Name ="HandoverDate" 
-   VerticalOptions="Center" 
-   HorizontalOptions="Center">
-        </Label>
-        <Label x:Name ="PickupDate" Text="Select a date and time for pickup" IsVisible="False"></Label>
+        <Label x:Name="Total"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
+        <Label x:Name="Status"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
+        <Label x:Name="HandoverDate"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
+        <Button x:Name="ConfirmPickup"
+                Text="Confirm Pickup"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="ConfirmPickup_Clicked" />
+
+        <Label x:Name="PickupDate" Text="Select a date and time for pickup" IsVisible="False"></Label>
         <DatePicker x:Name="DatePicker" IsEnabled="False" IsVisible="False"></DatePicker>
         <TimePicker x:Name="TimePicker" IsEnabled="False" IsVisible="False"></TimePicker>
         <Button x:Name="PickupBtn"
                 Clicked="PickupBtn_Clicked"
                 Text="Schedule Pickup"
-                VerticalOptions="Center" 
+                VerticalOptions="Center"
                 HorizontalOptions="Center"
-                IsVisible="Hidden"
-                IsEnabled="False"
-                ></Button>
+                IsVisible="False"
+                IsEnabled="False" />
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
+        <Button x:Name="BackToCustomerPageBtn"
+                Text="Go Back to Customer Page"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="BackToCustomerPageBtn_Clicked" />
+
     </VerticalStackLayout>
 </ContentPage>

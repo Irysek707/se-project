@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Haulage.Converters"
              x:Class="Haulage.View.CustomerPage"
              Title="CustomerPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <VerticalStackLayout>
         <Label x:Name="ErrorMessage"></Label>
         <Label x:Name="UserName"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <ListView x:Name="Orders" ItemSelected="Orders_ItemSelected" >
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
+        <ListView x:Name="Orders" ItemSelected="Orders_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                            <HorizontalStackLayout>
-                                <Label Text="{Binding Id}"></Label>
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Id}"></Label>
                             <Label Text="{Binding Status}" Margin="10,0,0,0"></Label>
                         </HorizontalStackLayout>
-                        </ViewCell>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
         <BoxView HeightRequest="20" Color="Transparent"/>
-        
         <Button Text="Back to Main Page"
                 Clicked="BackToMainPage"
                 SemanticProperties.Hint="Redirects you to the main page"
                 HorizontalOptions="Fill"  />
     </VerticalStackLayout>
-    
 </ContentPage>
