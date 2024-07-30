@@ -4,13 +4,13 @@
              x:Class="Haulage.View.AdministratorPage"
              Title="AdministratorPage">
     <VerticalStackLayout>
-        <Label x:Name="ErrorMessage"></Label>
+        <Label x:Name="ErrorMessage" TextColor="Red"></Label>
         <Label x:Name="UserName"
-       VerticalOptions="Center" 
-       HorizontalOptions="Center" />
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
         <Label Text ="Available Orders"
-VerticalOptions="Center" 
-HorizontalOptions="Center" />
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
         <ListView x:Name="Trips" ItemSelected="Trips_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -25,6 +25,43 @@ HorizontalOptions="Center" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Label Text ="Drivers" 
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
+        <ListView x:Name="DriversListView"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+
+                            <Label Text="{Binding Login}"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center" />
+
+                            <Button Text="Edit"
+                            Clicked="EditDriver_Clicked"
+                            CommandParameter="{Binding .}"
+                            HorizontalOptions="Center" />
+
+                            <Button Text="Delete"
+                            Clicked="DeleteDriver_Clicked"
+                            CommandParameter="{Binding .}"
+                            HorizontalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
+        <Button Text="Add New Driver" 
+                Clicked="AddNewDriver_Clicked"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
 
         <BoxView HeightRequest="20" Color="Transparent"/>
 
