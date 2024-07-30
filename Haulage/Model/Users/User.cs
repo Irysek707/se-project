@@ -12,8 +12,6 @@ namespace Haulage.Model
 
         [PrimaryKey]
         public string Login { get; set; }
-
-        // New fields
         public string Name { get; set; }
         public string Surname { get; set; }
 

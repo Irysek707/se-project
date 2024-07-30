@@ -106,7 +106,7 @@ namespace Haulage.View
 
         private async void AddNewDriver_Clicked(object sender, EventArgs e)
         {
-            // Prompt for Name and Surname
+            // Prompt for Login, Name and Surname of a new Driver
             string newLogin = await DisplayPromptAsync("Add New Driver", "Enter driver login:");
             string newName = await DisplayPromptAsync("Add New Driver", "Enter driver name:");
             string newSurname = await DisplayPromptAsync("Add New Driver", "Enter driver surname:");
@@ -116,7 +116,7 @@ namespace Haulage.View
                 {
                     var newDriver = new Driver
                     {
-                        Login = newLogin,  // Assuming Login is still used for a unique identifier
+                        Login = newLogin,
                         Name = newName,
                         Surname = newSurname
                     };

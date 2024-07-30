@@ -147,7 +147,7 @@ namespace Haulage.Control
                     throw new ArgumentException("Driver Login is not valid");
                 }
 
-                // Retrieve the existing driver by the old login
+                // Retrieve the existing driver by their login
                 var existingDriver = dbConnection.Query<Driver>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", driver.Login, (int)Role.DRIVER).FirstOrDefault();
 
                 if (existingDriver == null)
