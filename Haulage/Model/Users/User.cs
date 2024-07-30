@@ -1,8 +1,6 @@
-﻿
-using Haulage.Model.Constants;
+﻿using Haulage.Model.Constants;
 using Haulage.Model.Helpers;
 using SQLite;
-
 
 namespace Haulage.Model
 {
@@ -15,19 +13,19 @@ namespace Haulage.Model
         [PrimaryKey]
         public string Login { get; set; }
 
-        //More fields can be added here to ensure secure login, however they are out of scope for this application
-        /// This could also include an id to allow multiple users with the same name, <summary>
-        /// This could also include an id to allow multiple users with the same name,
-        ///however would then require different identification system so out of scope
+        // New fields
+        public string Name { get; set; }
+        public string Surname { get; set; }
 
-        public User(Role role, string login)
+        public User(Role role, string login, string name, string surname)
         {
             this.Role = role;
             this.Login = login;
+            this.Name = name;
+            this.Surname = surname;
             DBHelpers.EnterToDB(this);
         }
 
         public User() { }
-
     }
 }

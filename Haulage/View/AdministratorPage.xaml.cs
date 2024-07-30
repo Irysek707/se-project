@@ -65,12 +65,16 @@ namespace Haulage.View
         {
             var button = sender as Button;
             var driver = button.CommandParameter as Driver;
-            string newName = await DisplayPromptAsync("Edit Driver", "Enter new name:", initialValue: driver.Login);
-            if (!string.IsNullOrWhiteSpace(newName))
+
+            // Prompt for new Name and Surname
+            string newName = await DisplayPromptAsync("Edit Driver", "Enter new name:", initialValue: driver.Name);
+            string newSurname = await DisplayPromptAsync("Edit Driver", "Enter new surname:", initialValue: driver.Surname);
+            if (!string.IsNullOrWhiteSpace(newName) && !string.IsNullOrWhiteSpace(newSurname))
             {
                 try
                 {
-                    driver.Login = newName;
+                    driver.Name = newName;
+                    driver.Surname = newSurname;
                     AdminController.UpdateDriver(driver);
                     LoadData();
                 }
@@ -85,7 +89,7 @@ namespace Haulage.View
         {
             var button = sender as Button;
             var driver = button.CommandParameter as Driver;
-            bool confirm = await DisplayAlert("Delete Driver", $"Are you sure you want to delete {driver.Login}?", "Yes", "No");
+            bool confirm = await DisplayAlert("Delete Driver", $"Are you sure you want to delete {driver.Name} {driver.Surname}?", "Yes", "No");
             if (confirm)
             {
                 try
@@ -102,12 +106,20 @@ namespace Haulage.View
 
         private async void AddNewDriver_Clicked(object sender, EventArgs e)
         {
-            string newDriverName = await DisplayPromptAsync("Add New Driver", "Enter driver name:");
-            if (!string.IsNullOrWhiteSpace(newDriverName))
+            // Prompt for Name and Surname
+            string newLogin = await DisplayPromptAsync("Add New Driver", "Enter driver login:");
+            string newName = await DisplayPromptAsync("Add New Driver", "Enter driver name:");
+            string newSurname = await DisplayPromptAsync("Add New Driver", "Enter driver surname:");
+            if (!string.IsNullOrWhiteSpace(newName) && !string.IsNullOrWhiteSpace(newSurname))
             {
                 try
                 {
-                    var newDriver = new Driver { Login = newDriverName };
+                    var newDriver = new Driver
+                    {
+                        Login = newLogin,  // Assuming Login is still used for a unique identifier
+                        Name = newName,
+                        Surname = newSurname
+                    };
                     AdminController.AddDriver(newDriver);
                     LoadData();
                 }

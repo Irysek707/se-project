@@ -40,6 +40,14 @@
                             <Label Text="{Binding Login}"
                             VerticalOptions="Center"
                             HorizontalOptions="Center" />
+                            
+                            <Label Text="{Binding Name}"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center" />
+                            
+                            <Label Text="{Binding Surname}"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center" />
 
                             <Button Text="Edit"
                             Clicked="EditDriver_Clicked"

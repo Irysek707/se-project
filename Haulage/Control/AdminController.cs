@@ -123,7 +123,7 @@ namespace Haulage.Control
         {
             try
             {
-                var query = "SELECT [Login] FROM [User] WHERE [Role] = ?";
+                var query = "SELECT * FROM [User] WHERE [Role] = ?";
                 var drivers = dbConnection.Query<Driver>(query, (int)Role.DRIVER).ToList();
                 return drivers;
             }
@@ -132,6 +132,7 @@ namespace Haulage.Control
                 throw new Exception("Error retrieving drivers: " + e.Message, e);
             }
         }
+
         public static void UpdateDriver(Driver driver)
         {
             try
@@ -141,32 +142,22 @@ namespace Haulage.Control
                     throw new ArgumentNullException(nameof(driver), "Driver cannot be null");
                 }
 
-                string newLogin = driver.Login;
-
-                if (string.IsNullOrWhiteSpace(newLogin))
+                if (string.IsNullOrWhiteSpace(driver.Login))
                 {
                     throw new ArgumentException("Driver Login is not valid");
                 }
 
                 // Retrieve the existing driver by the old login
-                var existingDriver = dbConnection.Query<User>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", newLogin, (int)Role.DRIVER).FirstOrDefault();
+                var existingDriver = dbConnection.Query<Driver>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", driver.Login, (int)Role.DRIVER).FirstOrDefault();
 
                 if (existingDriver == null)
                 {
                     throw new Exception("Driver with the provided Login does not exist.");
                 }
 
-                // Check if the new login already exists
-                var existingNewLoginDriver = dbConnection.Query<User>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", newLogin, (int)Role.DRIVER).FirstOrDefault();
-
-                if (existingNewLoginDriver != null)
-                {
-                    throw new Exception("A driver with the new Login already exists.");
-                }
-
-                // Perform the update operation
-                var updateQuery = "UPDATE [User] SET [Login] = ? WHERE [Login] = ? AND [Role] = ?";
-                var rowsAffected = dbConnection.Execute(updateQuery, newLogin, existingDriver.Login, (int)Role.DRIVER);
+                // Update the driver details
+                var updateQuery = "UPDATE [User] SET [Name] = ?, [Surname] = ? WHERE [Login] = ? AND [Role] = ?";
+                var rowsAffected = dbConnection.Execute(updateQuery, driver.Name, driver.Surname, driver.Login, (int)Role.DRIVER);
 
                 if (rowsAffected == 0)
                 {
@@ -178,7 +169,6 @@ namespace Haulage.Control
                 throw new Exception("Error updating driver: " + e.Message, e);
             }
         }
-
 
         public static void DeleteDriver(Driver driver)
         {
@@ -211,7 +201,6 @@ namespace Haulage.Control
             }
         }
 
-
         public static void AddDriver(Driver driver)
         {
             try
@@ -221,8 +210,8 @@ namespace Haulage.Control
                     throw new ArgumentNullException(nameof(driver), "Driver cannot be null");
                 }
 
-                var query = "INSERT INTO [User] ([Role], [Login]) VALUES (?, ?)";
-                dbConnection.Execute(query, (int)Role.DRIVER, driver.Login);
+                var query = "INSERT INTO [User] ([Role], [Login], [Name], [Surname]) VALUES (?, ?, ?, ?)";
+                dbConnection.Execute(query, (int)Role.DRIVER, driver.Login, driver.Name, driver.Surname);
             }
             catch (Exception e)
             {
