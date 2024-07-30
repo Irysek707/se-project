@@ -23,5 +23,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
+        <Button Text="Back to Main Page"
+                Clicked="BackToMainPage"
+                SemanticProperties.Hint="Redirects you to the main page"
+                HorizontalOptions="Fill"  />
     </VerticalStackLayout>
 </ContentPage>

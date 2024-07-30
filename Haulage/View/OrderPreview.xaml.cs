@@ -20,12 +20,24 @@ public partial class OrderPreview : ContentPage
         order = orderToPreview;
         Items.ItemsSource = orderToPreview.Manifest.Items;
         Total.Text = "Total for this order is " + orderToPreview.Manifest.Total;
+
         if(orderToPreview.Handover != null)
         {
             string pickup = String.Format("Your {0} is scheduled for {1}", "pickup", orderToPreview.Handover.ExpectedHandover);
             string deliver = String.Format("Your {0} is scheduled for {1}", "delivery", orderToPreview.Handover.ExpectedHandover);
             HandoverDate.Text = orderToPreview.Handover.Pickup ? pickup : deliver;
         }
+
+        // Set button visibility based on order status
+        if (orderToPreview.Status == Model.Constants.Status.AWAITING_PICKUP)
+        {
+            ConfirmPickup.IsVisible = true;
+        }
+        else
+        {
+            ConfirmPickup.IsVisible = false;
+        }
+
         Status.Text = "Current order status " + orderToPreview.Status;
         if(orderToPreview.Status == Model.Constants.Status.PENDING)
         {
@@ -37,7 +49,59 @@ public partial class OrderPreview : ContentPage
             PickupBtn.IsEnabled = true;
             PickupBtn.IsVisible = true;
         }
+
+        // Show "Confirm Delivery" button only if status is EXPECTED
+        if (orderToPreview.Status == Model.Constants.Status.EXPECTED)
+        {
+            ConfirmDelivery.IsVisible = true;
+        }
+        else
+        {
+            ConfirmDelivery.IsVisible = false;
+        }
     }
+
+    private async void ConfirmPickup_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            // Change the status to EXPECTED
+            order.Status = Model.Constants.Status.EXPECTED;
+            // Update the order in the database
+            DB.connection.Update(order);
+
+            await DisplayAlert("Success", "Pickup confirmed. Status updated to EXPECTED.", "OK");
+
+            // Refresh the page
+            App.Current.MainPage = new NavigationPage(new OrderPreview(order, customer));
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage.Text = ex.Message;
+        }
+    }
+
+    private async void ConfirmDelivery_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            // Change the status to COLLECTED
+            order.Status = Model.Constants.Status.COLLECTED;
+            // Update the order in the database
+            DB.connection.Update(order);
+
+            await DisplayAlert("Success", "Delivery confirmed. Status updated to COLLECTED.", "OK");
+
+            // Refresh the page
+            App.Current.MainPage = new NavigationPage(new OrderPreview(order, customer));
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage.Text = ex.Message;
+        }
+    }
+
+
 
     private async void PickupBtn_Clicked(object sender, EventArgs e)
     {
@@ -59,5 +123,11 @@ public partial class OrderPreview : ContentPage
         {
             ErrorMessage.Text = "Please select a valid date to pickup";
         }
+    }
+
+    private async void BackToCustomerPageBtn_Clicked(object sender, EventArgs e)
+    {
+        // Navigate back to the customer page
+        App.Current.MainPage = new NavigationPage(new CustomerPage(customer)); // Assuming CustomerPage is the page for customer overview
     }
 }

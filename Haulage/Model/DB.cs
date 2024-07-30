@@ -44,10 +44,11 @@ namespace Haulage
             connection.CreateTable<Trip>();
             connection.CreateTable<DeliveryAddress>();
             connection.CreateTable<TripStop>();
-            /// Remember to add new tables for each model class created here
 
-            /// Adding mockOrder resources here, disable for production
-           // new MockResources().CreateMockResources();
+            // Remember to add new tables for each model class created here
+
+            // Adding mockOrder resources here, disable for production
+           //new MockResources().CreateMockResources();
         }
         private void cleanup()
         {
