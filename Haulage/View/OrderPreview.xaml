@@ -32,6 +32,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
         <Label x:Name="Total"
                VerticalOptions="Center" 
                HorizontalOptions="Center" />
@@ -59,6 +60,20 @@
 
 
         <Label x:Name="PickupDate" Text="Select a date and time for pickup" IsVisible="False"></Label>
+
+            <Label x:Name ="Total" 
+         VerticalOptions="Center" 
+         HorizontalOptions="Center">
+            </Label>
+        <Label x:Name ="Status" 
+  VerticalOptions="Center" 
+  HorizontalOptions="Center">
+        </Label>
+        <Label x:Name ="HandoverDate" 
+   VerticalOptions="Center" 
+   HorizontalOptions="Center">
+        </Label>
+        <Label x:Name ="PickupDate" Text="Select a date and time for pickup" IsVisible="False"></Label>
         <DatePicker x:Name="DatePicker" IsEnabled="False" IsVisible="False"></DatePicker>
         <TimePicker x:Name="TimePicker" IsEnabled="False" IsVisible="False"></TimePicker>
         <Button x:Name="PickupBtn"

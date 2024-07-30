@@ -1,4 +1,4 @@
-﻿using Haulage.Model;
+using Haulage.Model;
 using Haulage.Model.Constants;
 using SQLite;
 using System;
@@ -47,7 +47,9 @@ namespace Haulage
             /// Remember to add new tables for each model class created here
 
             /// Adding mockOrder resources here, disable for production
+
            /// new MockResources().CreateMockResources();
+
         }
         private void cleanup()
         {

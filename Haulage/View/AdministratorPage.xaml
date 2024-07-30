@@ -32,5 +32,6 @@ HorizontalOptions="Center" />
                 Clicked="BackToMainPage"
                 SemanticProperties.Hint="Redirects you to the main page"
                 HorizontalOptions="Fill"  />
+
     </VerticalStackLayout>
 </ContentPage>

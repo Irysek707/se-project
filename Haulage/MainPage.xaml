@@ -33,6 +33,7 @@
                 Clicked="GoToDriverPage"
                  HorizontalOptions="Fill" />
             <Button
+
                 x:Name="AdminBtn"
                 Text="Go to Admin Page"
                 SemanticProperties.Hint="Redirects you to the Administrator page to do administrator actions"

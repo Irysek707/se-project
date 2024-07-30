@@ -5,6 +5,7 @@ using Microsoft.Maui.Controls;
 
 namespace Haulage.View
 {
+
     public partial class OrderPreview : ContentPage
     {
         private CustomerOrder order;
@@ -12,6 +13,22 @@ namespace Haulage.View
         private CustomerController controller;
 
         public OrderPreview(CustomerOrder orderToPreview, Customer customer)
+
+    private CustomerOrder order;
+    private Customer customer;
+    private CustomerController controller;
+	public OrderPreview(CustomerOrder orderToPreview, Customer customer)
+	{
+        InitializeComponent();
+        this.customer = customer;
+        this.controller = new CustomerController(customer.Login);
+        UserName.Text = "Currently logged in as " + customer.Login;
+        OrderId.Text = "Currently viewing Order " + orderToPreview.Id;
+        order = orderToPreview;
+        Items.ItemsSource = orderToPreview.Manifest.Items;
+        Total.Text = "Total for this order is " + orderToPreview.Manifest.Total;
+        if(orderToPreview.Handover != null)
+
         {
             InitializeComponent();
             this.customer = customer;
@@ -64,7 +81,12 @@ namespace Haulage.View
 
         }
 
+
         private async void ConfirmPickup_Clicked(object sender, EventArgs e)
+
+        Status.Text = "Current order status " + orderToPreview.Status;
+        if(orderToPreview.Status == Model.Constants.Status.PENDING)
+
         {
             try
             {
@@ -88,6 +110,7 @@ namespace Haulage.View
         {
             try
             {
+
                 // Change the status to COLLECTED
                 order.Status = Model.Constants.Status.COLLECTED;
                 // Update the order in the database
@@ -97,6 +120,12 @@ namespace Haulage.View
 
                 // Refresh the page
                 App.Current.MainPage = new NavigationPage(new OrderPreview(order, customer));
+
+                Handover handover = controller.ScheduleHandover(order, DatePicker.Date+TimePicker.Time, true);
+                await DisplayAlert("Pickup scheduled", handover.ExpectedHandover.ToString(),"Accept");
+                order.AddHandover(handover);
+                App.Current.MainPage = new NavigationPage(new OrderPreview(order,customer));
+
             }
             catch (Exception ex)
             {

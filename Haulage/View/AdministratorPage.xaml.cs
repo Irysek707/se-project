@@ -27,11 +27,19 @@ public partial class AdministratorPage : ContentPage
 
     private void Trips_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
+
         if (Trips.SelectedItem == null)
         {
             ErrorMessage.Text = "Please select a trip to look in detail";
         }
         else if (Trips.SelectedItem is Trip)
+
+        if(Trips.SelectedItem == null)
+        {
+            ErrorMessage.Text = "Please select a trip to look in detail";
+        }
+        else if(Trips.SelectedItem is Trip)
+
         {
             Trip trip = Trips.SelectedItem as Trip;
             try
@@ -39,6 +47,7 @@ public partial class AdministratorPage : ContentPage
                 Trip tripWithDetails = AdminController.GetTrip(trip.Id.ToString());
                 App.Current.MainPage = new NavigationPage(new TripPage(tripWithDetails, admin));
             }
+
             catch (Exception ex)
             {
                 ErrorMessage.Text = ex.Message;
@@ -51,5 +60,13 @@ public partial class AdministratorPage : ContentPage
     private void BackToMainPage(object sender, EventArgs e)
     {
         App.Current.MainPage = new NavigationPage(new MainPage());
+
+            catch (Exception ex) {
+                ErrorMessage.Text = ex.Message;
+        }
+    }
+
+
+
     }
 }
