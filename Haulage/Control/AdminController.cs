@@ -82,6 +82,24 @@ namespace Haulage.Control
             }
         }
 
+        public static List<Driver> GetAllDriver()
+        {
+            try
+            {
+                DB.connection.BeginTransaction();
+                SQLiteCommand comm = new SQLiteCommand(DB.connection);
+                comm.CommandText = "SELECT [Role],[Login]  FROM [User]  WHERE Role = 1;";
+                List<Driver> drivers = comm.ExecuteQuery<Driver>().ToList();
+                DB.connection.Commit();
+                return drivers;
+            }
+            catch (Exception e)
+            {
+                DB.connection.Rollback();
+                throw e;
+            }
+        }
+
         public static Transport AllocateVehicle(Transport transport, Trip trip)
         {
             try
@@ -123,7 +141,7 @@ namespace Haulage.Control
         {
             try
             {
-                var query = "SELECT * FROM [User] WHERE [Role] = ?";
+                var query = "SELECT [Login], [Name], [Surname] FROM [User] WHERE [Role] = ?";
                 var drivers = dbConnection.Query<Driver>(query, (int)Role.DRIVER).ToList();
                 return drivers;
             }
@@ -148,7 +166,7 @@ namespace Haulage.Control
                 }
 
                 // Retrieve the existing driver by their login
-                var existingDriver = dbConnection.Query<Driver>("SELECT * FROM [User] WHERE [Login] = ? AND [Role] = ?", driver.Login, (int)Role.DRIVER).FirstOrDefault();
+                var existingDriver = dbConnection.Query<Driver>("SELECT [Login], [Name], [Surname] FROM [User] WHERE [Login] = ? AND [Role] = ?", driver.Login, (int)Role.DRIVER).FirstOrDefault();
 
                 if (existingDriver == null)
                 {
