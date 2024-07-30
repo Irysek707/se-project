@@ -31,7 +31,7 @@ namespace Haulage.View
 
             Status.Text = "Current order status " + orderToPreview.Status;
 
-            // Set button visibility based on order status
+            // Show "Confirm Pickup" button only if status is AWAITING_PICKUP
             if (orderToPreview.Status == Model.Constants.Status.AWAITING_PICKUP)
             {
                 ConfirmPickup.IsVisible = true;
@@ -51,6 +51,17 @@ namespace Haulage.View
                 PickupBtn.IsEnabled = true;
                 PickupBtn.IsVisible = true;
             }
+
+            // Show "Confirm Delivery" button only if status is EXPECTED
+            if (orderToPreview.Status == Model.Constants.Status.EXPECTED)
+            {
+                ConfirmDelivery.IsVisible = true;
+            }
+            else
+            {
+                ConfirmDelivery.IsVisible = false;
+            }
+
         }
 
         private async void ConfirmPickup_Clicked(object sender, EventArgs e)
@@ -72,6 +83,27 @@ namespace Haulage.View
                 ErrorMessage.Text = ex.Message;
             }
         }
+
+        private async void ConfirmDelivery_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                // Change the status to COLLECTED
+                order.Status = Model.Constants.Status.COLLECTED;
+                // Update the order in the database
+                DB.connection.Update(order);
+
+                await DisplayAlert("Success", "Delivery confirmed. Status updated to COLLECTED.", "OK");
+
+                // Refresh the page
+                App.Current.MainPage = new NavigationPage(new OrderPreview(order, customer));
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = ex.Message;
+            }
+        }
+
 
         private async void PickupBtn_Clicked(object sender, EventArgs e)
         {
