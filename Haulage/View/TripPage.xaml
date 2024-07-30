@@ -68,19 +68,37 @@
             </ListView.ItemTemplate>
         </ListView>
         <BoxView HeightRequest="20" Color="Transparent"/>
-        
-        <Button x:Name="AllocateDriverBtn" IsEnabled="false" IsVisible="false" Text="Allocate Driver"  Clicked="AllocateDriverBtn_Clicked"></Button>
+
+        <Button x:Name="AllocateDriverBtn"
+                IsEnabled="false"
+                IsVisible="false"
+                Text="Allocate Driver"
+                Clicked="AllocateDriverBtn_Clicked"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"></Button>
         
         <BoxView HeightRequest="20" Color="Transparent"/>
-        
-        <Button x:Name="AllocateVehicleBtn" IsEnabled="false" IsVisible="false" Text="Allocate Vehicle" Clicked="AllocateVehicleBtn_Clicked"></Button>
+
+        <Button x:Name="AllocateVehicleBtn" IsEnabled="false"
+                IsVisible="false" Text="Allocate Vehicle"
+                Clicked="AllocateVehicleBtn_Clicked"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"></Button>
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
+        <Button x:Name="DelayedTripBtn"
+                Text="Delay the trip"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="DelayedTripBtn_Clicked" />
 
         <BoxView HeightRequest="20" Color="Transparent"/>
 
         <Button x:Name="BackToUserPageBtn"
-        Text="Go Back to User Page"
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        Clicked="BackToUserPageBtn_Clicked" />
+                Text="Go Back to User Page"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="BackToUserPageBtn_Clicked" />
     </VerticalStackLayout>
 </ContentPage>

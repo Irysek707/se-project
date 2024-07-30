@@ -1,13 +1,8 @@
 ﻿using Haulage.Model.Constants;
 using Haulage.Model.Helpers;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using ForeignKeyAttribute = SQLiteNetExtensions.Attributes.ForeignKeyAttribute;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Haulage.Model
 {
@@ -31,7 +26,6 @@ namespace Haulage.Model
         double StartLongitude { get; set; }
 
         // numbers from -90 to 90
-
         double StartLatitude { get; set; }
 
         public Trip(TripStop[] stops, double startLongitude, double startLatitude)
@@ -86,6 +80,13 @@ namespace Haulage.Model
         public void setStops(List<TripStop> stops)
         {
             this.stops = stops.ToArray();
+        }
+
+        // Method to delay the trip
+        public void DelayTrip()
+        {
+            this.TripStatus = TripStatus.DELAYED;
+            DBHelpers.UpdateDB(this);
         }
     }
 }
