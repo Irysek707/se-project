@@ -67,7 +67,20 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <BoxView HeightRequest="20" Color="Transparent"/>
+        
         <Button x:Name="AllocateDriverBtn" IsEnabled="false" IsVisible="false" Text="Allocate Driver"  Clicked="AllocateDriverBtn_Clicked"></Button>
+        
+        <BoxView HeightRequest="20" Color="Transparent"/>
+        
         <Button x:Name="AllocateVehicleBtn" IsEnabled="false" IsVisible="false" Text="Allocate Vehicle" Clicked="AllocateVehicleBtn_Clicked"></Button>
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
+        <Button x:Name="BackToUserPageBtn"
+        Text="Go Back to User Page"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Clicked="BackToUserPageBtn_Clicked" />
     </VerticalStackLayout>
 </ContentPage>

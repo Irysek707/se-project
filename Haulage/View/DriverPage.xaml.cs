@@ -2,27 +2,28 @@ using Haulage.Control;
 using Haulage.Model;
 using Microsoft.Maui.Controls;
 
-namespace Haulage.View;
-
-public partial class DriverPage : ContentPage
+namespace Haulage.View
 {
-    private Driver driver;
-    public DriverPage(Driver driver)
+    public partial class DriverPage : ContentPage
     {
-        InitializeComponent();
-        this.driver = driver;
-        UserName.Text = "Currently logged in as " + driver.Login;
-        DriverController controller = new DriverController(driver.Login);
-        try
+        private Driver driver;
+
+        public DriverPage(Driver driver)
         {
-            List<Trip> trips = controller.GetAllTrips();
-            Trips.ItemsSource = trips;
+            InitializeComponent();
+            this.driver = driver;
+            UserName.Text = "Currently logged in as " + driver.Login;
+            DriverController controller = new DriverController(driver.Login);
+            try
+            {
+                List<Trip> trips = controller.GetAllTrips();
+                Trips.ItemsSource = trips;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = ex.Message;
+            }
         }
-        catch (Exception ex)
-        {
-            ErrorMessage.Text = ex.Message;
-        }
-    }
 
         private void Trips_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
@@ -45,14 +46,9 @@ public partial class DriverPage : ContentPage
             }
         }
 
-
-    private void BackToMainPage(object sender, EventArgs e)
-    {
-        App.Current.MainPage = new NavigationPage(new MainPage());
+        private void BackToMainPage(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new NavigationPage(new MainPage());
+        }
     }
-
-
 }
-
-
-

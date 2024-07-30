@@ -1,5 +1,6 @@
 using Haulage.Control;
 using Haulage.Model;
+using Haulage.Model.Constants;
 
 namespace Haulage.View;
 
@@ -76,4 +77,17 @@ public partial class TripPage : ContentPage
             ErrorMessage.Text = "No vehicle selected";
         }
     }
+
+    private async void BackToUserPageBtn_Clicked(object sender, EventArgs e)
+    {
+        if (user.Role == Model.Constants.Role.DRIVER)
+        {
+            App.Current.MainPage = new NavigationPage(new DriverPage(MockResources.mockDriver));
+        }
+
+		else if (user.Role == Model.Constants.Role.ADMIN) { 
+        App.Current.MainPage = new NavigationPage(new AdministratorPage(MockResources.mockAdmin));
+		}
+    }
+
 }
