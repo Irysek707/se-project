@@ -27,6 +27,9 @@ public partial class TripPage : ContentPage
         // Check if the trip is delayed and set the visibility of the button
         DelayedTripBtn.IsVisible = trip.TripStatus != TripStatus.DELAYED;
 
+        // Check if the trip is delayed or scheduled and set the visibility of the button
+        OnTimeTripBtn.IsVisible = trip.TripStatus == TripStatus.DELAYED || trip.TripStatus == TripStatus.SCHEDULED;
+
         if (user.Role == Model.Constants.Role.ADMIN)
         {
             AllocateDriverBtn.IsEnabled = true;
@@ -105,6 +108,22 @@ public partial class TripPage : ContentPage
             Status.Text = "Current trip status " + trip.TripStatus;
             await DisplayAlert("Trip Delayed", "The trip has been delayed.", "OK");
             DelayedTripBtn.IsVisible = false; // Hide the button after delaying the trip
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage.Text = ex.Message;
+        }
+    }
+
+    // Event handler for the "OnTime trip" button
+    private async void OnTimeTripBtn_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            trip.OnTimeTrip();
+            Status.Text = "Current trip status " + trip.TripStatus;
+            await DisplayAlert("Trip On Time", "The trip has been set as On Time.", "OK");
+            OnTimeTripBtn.IsVisible = false; // Hide the button after adding On Time to the trip
         }
         catch (Exception ex)
         {

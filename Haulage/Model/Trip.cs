@@ -88,5 +88,12 @@ namespace Haulage.Model
             this.TripStatus = TripStatus.DELAYED;
             DBHelpers.UpdateDB(this);
         }
+
+        // Method to set the trip on time
+        public void OnTimeTrip()
+        {
+            this.TripStatus = TripStatus.ONTIME;
+            DBHelpers.UpdateDB(this);
+        }
     }
 }

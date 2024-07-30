@@ -95,6 +95,14 @@
 
         <BoxView HeightRequest="20" Color="Transparent"/>
 
+        <Button x:Name="OnTimeTripBtn"
+                Text="Set On Time the trip"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="OnTimeTripBtn_Clicked" />
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
         <Button x:Name="BackToUserPageBtn"
                 Text="Go Back to User Page"
                 VerticalOptions="Center"
