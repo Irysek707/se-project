@@ -46,4 +46,9 @@ public partial class AdministratorPage : ContentPage
 
 
     }
+
+    private void BackToMainPage(object sender, EventArgs e)
+    {
+        App.Current.MainPage = new NavigationPage(new MainPage());
+    }
 }

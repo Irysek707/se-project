@@ -43,11 +43,8 @@ namespace Haulage.Control
 
         public Handover ScheduleHandover(CustomerOrder order, DateTime handoverDate, bool pickup)
         {
-            if(handoverDate < DateTime.Now)
-            {
-                throw new Exception("Cannot pick date less than the current day");
-            }
-           return order.ScheduleHandover(order, handoverDate, pickup);
+            // Make sure the call to ScheduleHandover matches the new method signature
+            return order.ScheduleHandover(handoverDate, pickup);
         }
     }
 }

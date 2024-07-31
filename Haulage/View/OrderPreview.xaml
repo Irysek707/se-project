@@ -39,6 +39,22 @@
    VerticalOptions="Center" 
    HorizontalOptions="Center">
         </Label>
+
+        <BoxView HeightRequest="20" Color="Transparent"/>
+
+        <Button x:Name="ConfirmPickup"
+        Text="Confirm Pickup"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Clicked="ConfirmPickup_Clicked" />
+
+        <Button x:Name="ConfirmDelivery"
+        Text="Confirm Delivery"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Clicked="ConfirmDelivery_Clicked"
+        IsVisible="False" />
+
         <Label x:Name ="PickupDate" Text="Select a date and time for pickup" IsVisible="False"></Label>
         <DatePicker x:Name="DatePicker" IsEnabled="False" IsVisible="False"></DatePicker>
         <TimePicker x:Name="TimePicker" IsEnabled="False" IsVisible="False"></TimePicker>
@@ -50,5 +66,14 @@
                 IsVisible="Hidden"
                 IsEnabled="False"
                 ></Button>
+        
+        <BoxView HeightRequest="20" Color="Transparent"/>
+        
+        <Button x:Name="BackToCustomerPageBtn"
+        Text="Go Back to Customer Page"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Clicked="BackToCustomerPageBtn_Clicked" />
+
     </VerticalStackLayout>
 </ContentPage>
