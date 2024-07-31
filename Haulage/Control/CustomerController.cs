@@ -17,7 +17,7 @@ namespace Haulage.Control
         }
         public List<CustomerOrder> GetAllOrders()
         {
-            if (customerlogin == null) { throw new ArgumentNullException("Please provide a user login to view orders"); }
+            if (customerlogin == null || customerlogin == "") { throw new ArgumentNullException("Please provide a user login to view orders"); }
             List<CustomerOrder> orders = OrderController.GetAllOrdersForCustomer(customerlogin);
             if (orders == null || orders.Count == 0) { { throw new Exception("No orders available for the user"); } }
             else { return orders; }

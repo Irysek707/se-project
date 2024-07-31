@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Haulage.Control
 {
-    class DriverController
+    public class DriverController
     {
         private string driverLogin;
 
@@ -18,7 +18,7 @@ namespace Haulage.Control
     
         public List<Trip> GetAllTrips()
         {
-            if (driverLogin == null) { throw new ArgumentNullException("Please provide a user login to view trips"); }
+            if (driverLogin == null || driverLogin == "") { throw new ArgumentNullException("Please provide a user login to view trips"); }
             List<Trip> trips = TripController.GetAllTripsForDriver(driverLogin);
             if (trips == null || trips.Count == 0) { { throw new Exception("No trips available for the user"); } }
             else { return trips; }

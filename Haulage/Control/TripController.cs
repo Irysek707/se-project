@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Haulage.Control
 {
-    class TripController
+    public class TripController
     {
 
         public static List<Trip> GetAllTrips()
@@ -77,6 +77,10 @@ namespace Haulage.Control
                     if (deliveryAddress.Count > 1)
                     {
                         throw new Exception("Too many addresses for a single order");
+                    }
+                    if(deliveryAddress.Count == 0)
+                    {
+                        throw new Exception("No delivery address for a stop");
                     }
                     stop.setDeliveryAddress(deliveryAddress[0]);
                     CustomerOrder order = OrderController.getCustomerOrderContinueTransaction(stop.OrderId.ToString());
