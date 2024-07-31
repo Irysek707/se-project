@@ -13,19 +13,19 @@ namespace Haulage.Model.Constants
     { 
 
         //Placeholder until user implementation
-        public static Customer mockCustomer = new Customer("customer1");
-        public static Driver mockDriver = new Driver("driver1");
+        public static Customer mockCustomer = new Customer("customer1", "Alicia", "Keys");
+        public static Driver mockDriver = new Driver("driver1", "Jane", "Doe");
 
         // In real system mapping for inheritance would be necessary to support sqlite as the database 
         // However for the mocks it is easier to enter them to DB with their default type
-        public static User mockDriver1 = new(Role.DRIVER,"driver1");
-        public static User mockDriver2 = new(Role.DRIVER, "driver2");
+        public static User mockDriver1 = new(Role.DRIVER,"driver1", "Jane", "Doe");
+        public static User mockDriver2 = new(Role.DRIVER, "driver2", "John", "Smith");
 
         //Same as for drivers but for transport
         public Transport transport1 = new Transport("Volvo", 500);
         public Transport transport2 = new Transport("Nissan",500);
         public Transport transport3 = new Transport("Solaris", 18.000);
-        public static Admin mockAdmin = new Admin("admin1");
+        public static Admin mockAdmin = new Admin("admin1", "Master", "Admin");
         public static Warehouse warehouse = new Warehouse(12.12, 12.12);
         public static Car car1 = new Car("Volvo");
         public static Car car2 = new Car("Nissan");
