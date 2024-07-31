@@ -28,16 +28,16 @@
             </ListView.ItemTemplate>
         </ListView>
             <Label x:Name ="Total" 
-         VerticalOptions="Center" 
-         HorizontalOptions="Center">
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center">
             </Label>
         <Label x:Name ="Status" 
-  VerticalOptions="Center" 
-  HorizontalOptions="Center">
+                VerticalOptions="Center" 
+                HorizontalOptions="Center">
         </Label>
         <Label x:Name ="HandoverDate" 
-   VerticalOptions="Center" 
-   HorizontalOptions="Center">
+                VerticalOptions="Center" 
+                HorizontalOptions="Center">
         </Label>
 
         <BoxView HeightRequest="20" Color="Transparent"/>
