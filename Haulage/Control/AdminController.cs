@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Haulage.Control
 {
-    class AdminController
+    public class AdminController
     {
         public AdminController() { }
 

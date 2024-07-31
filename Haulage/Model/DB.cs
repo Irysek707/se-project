@@ -18,6 +18,13 @@ namespace Haulage
             this.Init();
         }
 
+        // A method to create a DB to allow for unit tests
+        // (In future ideally the connection would not be null to test error handling correctly)
+        public DB(bool test)
+        {
+            connection = new SQLiteConnection("DataSource=:memory:");
+        }
+
         //This will init the database with mockData (from MockResources in Constants)
         //Disable the code in those resources if
         public void Init()
