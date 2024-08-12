@@ -1,16 +1,12 @@
 ﻿using Haulage.Model.Constants;
 using Haulage.Model.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Haulage.Model.Users
 {
     public class Customer : User
     {
-        public Customer(string login) : base(Role.CUSTOMER, login)
+        public Customer(string login, string name, string surname)
+            : base(Role.CUSTOMER, login, name, surname)
         {
         }
     }

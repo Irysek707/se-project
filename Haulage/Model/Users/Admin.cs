@@ -1,15 +1,12 @@
-﻿using Haulage.Model.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Haulage.Model.Constants;
+using Haulage.Model.Helpers;
 
 namespace Haulage.Model.Users
 {
-    public class Admin: User
+    public class Admin : User
     {
-        public Admin(string login) : base(Constants.Role.ADMIN, login)
+        public Admin(string login, string name, string surname)
+            : base(Constants.Role.ADMIN, login, name, surname)
         {
         }
     }
