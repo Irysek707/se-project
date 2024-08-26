@@ -27,5 +27,15 @@ namespace Haulage.Model.Helpers
             /// Placeholder here, to leave space in future to implement integration with maps or similar
             return new TimeSpan(2, 20, 0);
         }
+
+        public static class RouteHelper
+        {
+            public static List<string> CalculateRoute(List<string> destinations)
+            {
+                // Example logic: Sort destinations alphabetically
+                destinations.Sort();
+                return destinations;
+            }
+        }
     }
 }

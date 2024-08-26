@@ -40,7 +40,6 @@ HorizontalOptions="Center" />
                 Clicked="PlanTripRoutesButton_Click"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
-                SemanticProperties.Hint="Display t
-                he plan trip routes"/>
+                SemanticProperties.Hint="Display the plan trip routes"/>
     </VerticalStackLayout>
 </ContentPage>
