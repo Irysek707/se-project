@@ -20,6 +20,7 @@ HorizontalOptions="Center" />
                             <Label Text="{Binding ScheduledDuration}" Margin="10,0,0,0"></Label>
                             <Label Text="{Binding NumberOfStops}" Margin="10,0,0,0"></Label>
                             <Label Text="{Binding TripStatus}" Margin="10,0,0,0"></Label>
+                            <Label Text="Planned Route will be displayed here"></Label>
                         </HorizontalStackLayout>
                     </ViewCell>
                 </DataTemplate>
@@ -33,5 +34,13 @@ HorizontalOptions="Center" />
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 SemanticProperties.Hint="Redirects you to the main page"/>
+
+
+        <Button Text="Plan Trip Routes" 
+                Clicked="PlanTripRoutesButton_Click"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="Display t
+                he plan trip routes"/>
     </VerticalStackLayout>
 </ContentPage>
