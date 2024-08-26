@@ -28,7 +28,9 @@ namespace Haulage.Model
         // numbers from -90 to 90
         double StartLatitude { get; set; }
 
-        public Trip(TripStop[] stops, double startLongitude, double startLatitude)
+        public string Route { get; set; }
+
+    public Trip(TripStop[] stops, double startLongitude, double startLatitude)
         {
             OtherHelpers.CheckLongitudeAndLatitude(startLongitude, startLatitude);
             this.Id = Guid.NewGuid();
