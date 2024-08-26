@@ -20,13 +20,20 @@ HorizontalOptions="Center" />
                             <Label Text="{Binding ScheduledDuration}" Margin="10,0,0,0"></Label>
                             <Label Text="{Binding NumberOfStops}" Margin="10,0,0,0"></Label>
                             <Label Text="{Binding TripStatus}" Margin="10,0,0,0"></Label>
-                            <Label Text="Planned Route will be displayed here"></Label>
                         </HorizontalStackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
+        <!-- Label to display the planned route -->
+        <Label x:Name="PlannedRouteLabel"
+               Text="Planned Route will be displayed here."
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               FontSize="Medium"
+               Margin="10" />
+        
         <BoxView HeightRequest="20" Color="Transparent"/>
 
         <Button Text="Back to Main Page"

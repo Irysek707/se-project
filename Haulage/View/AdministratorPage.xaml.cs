@@ -63,24 +63,16 @@ public partial class AdministratorPage : ContentPage
 
     private void PlanTripRoutes()
     {
-        // Example data: list of destinations
-        List<string> destinations = new List<string> { "CityA", "CityB", "CityC" };
+        // Example placeholder data: list of destinations
+        List<string> destinations = new List<string> { "DestinationA", "DestinationB", "DestinationC" };
 
         // Call the RouteHelper's CalculateRoute method
         List<string> plannedRoute = RouteHelper.CalculateRoute(destinations);
 
-        // Create a new Trip object or update an existing one
-        Trip plannedTrip = new Trip(/* parameters */)
-        {
-            Route = string.Join(" -> ", plannedRoute) // Store the planned route as a string
-        };
+        // Combine the planned route into a single string for display
+        string plannedRouteString = string.Join(" -> ", plannedRoute);
 
-        // Save this plannedTrip to the database using your data access method
-        DBHelpers.EnterToDB(plannedTrip); // Assuming this method handles new entries
-
-        // Refresh the ListView to include the new planned trip
-        var trips = adminController.GetAllTrips();
-        Trips.ItemsSource = null; // Reset the ItemsSource to refresh the ListView
-        Trips.ItemsSource = trips;
+        // Display the planned route on a label
+        PlannedRouteLabel.Text = "Planned Route: " + plannedRouteString;
     }
 }
