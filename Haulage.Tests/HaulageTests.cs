@@ -138,6 +138,96 @@ namespace Haulage.Tests
             Assert.AreEqual(TripStatus.DELAYED, updatedTrip.TripStatus);
         }
 
+        [Test]
+        public void TestAddDriver_Success()
+        {
+            // Arrange
+            var driver = new Driver("testDriver", "John", "Doe");
+
+            // Act
+            AdminController.AddDriver(driver);
+            var insertedDriver = DB.connection.Find<Driver>(driver.Login);
+
+            // Assert
+            Assert.NotNull(insertedDriver);
+            Assert.AreEqual(driver.Login, insertedDriver.Login);
+            Assert.AreEqual(driver.Name, insertedDriver.Name);
+            Assert.AreEqual(driver.Surname, insertedDriver.Surname);
+        }
+
+        [Test]
+        public void TestAddDriver_Failure()
+        {
+            // Arrange
+            var driver = new Driver(null, "John", "Doe");
+
+            // Act & Assert
+            var ex = Assert.Throws<Exception>(() => AdminController.AddDriver(driver));
+            Assert.AreEqual("Error adding driver: Driver cannot be null", ex.Message);
+        }
+
+        [Test]
+        public void TestUpdateDriver_Success()
+        {
+            // Arrange
+            var driver = new Driver("testDriver", "John", "Doe");
+            AdminController.AddDriver(driver);
+
+            // Act
+            driver.Name = "Jane";
+            driver.Surname = "Smith";
+            AdminController.UpdateDriver(driver);
+            var updatedDriver = DB.connection.Find<Driver>(driver.Login);
+
+            // Assert
+            Assert.AreEqual("Jane", updatedDriver.Name);
+            Assert.AreEqual("Smith", updatedDriver.Surname);
+        }
+
+        [Test]
+        public void TestUpdateDriver_Failure()
+        {
+            // Arrange
+            var driver = new Driver("testDriver", "John", "Doe");
+            AdminController.AddDriver(driver);
+
+            // Modify to an invalid driver data
+            driver.Name = "";
+            driver.Surname = "";
+
+            // Act & Assert
+            var ex = Assert.Throws<Exception>(() => AdminController.UpdateDriver(driver));
+            Assert.AreEqual("Error updating driver: No records were updated. Check if the driver exists and has the correct Login.", ex.Message);
+        }
+
+        [Test]
+        public void TestDeleteDriver_Success()
+        {
+            // Arrange
+            var driver = new Driver("testDriver", "John", "Doe");
+            AdminController.AddDriver(driver);
+
+            // Act
+            AdminController.DeleteDriver(driver);
+            var deletedDriver = DB.connection.Find<Driver>(driver.Login);
+
+            // Assert
+            Assert.IsNull(deletedDriver);
+        }
+
+        [Test]
+        public void TestDeleteDriver_Failure()
+        {
+            // Arrange
+            var driver = new Driver("nonExistentDriver", "John", "Doe");
+
+            // Act & Assert
+            var ex = Assert.Throws<Exception>(() => AdminController.DeleteDriver(driver));
+            Assert.AreEqual("Error deleting driver: Driver with the provided Login does not exist.", ex.Message);
+        }
+
+
+
     }
 
 }
