@@ -4,10 +4,12 @@ using Haulage;
 using Haulage.Model;
 using Haulage.Model.Constants;
 using Haulage.Control;
+using System.Collections.Generic;
+using NSubstitute;
 
 namespace Haulage.Tests
 {
-    public class CustomerControllerIntegrationTests
+    public class UnitTests
     {
         private CustomerController _controller;
         private DB _database;
@@ -115,5 +117,27 @@ namespace Haulage.Tests
             var updatedOrder = DB.connection.Find<CustomerOrder>(order.Id);
             Assert.AreEqual(Status.COLLECTED, updatedOrder.Status);
         }
+
+        [Test]
+        public void ReportDelay_ShouldUpdateTripStatusToDelayed()
+        {
+            // Arrange
+            var trip = new Trip
+            {
+                Id = Guid.NewGuid(),
+                TripStatus = TripStatus.ONTIME
+            };
+            DB.connection.Insert(trip);
+
+            // Act
+            trip.DelayTrip();
+            DB.connection.Update(trip);
+
+            // Assert
+            var updatedTrip = DB.connection.Find<Trip>(trip.Id);
+            Assert.AreEqual(TripStatus.DELAYED, updatedTrip.TripStatus);
+        }
+
     }
+
 }

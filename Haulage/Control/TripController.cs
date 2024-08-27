@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Haulage.Control
 {
-    class TripController
+   class TripController
     {
 
         public static List<Trip> GetAllTrips()
