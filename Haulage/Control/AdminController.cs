@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Haulage.Control
 {
-    class AdminController
+    public class AdminController
     {
         // Use the existing connection object from DB
         private static SQLiteConnection dbConnection = DB.connection;
