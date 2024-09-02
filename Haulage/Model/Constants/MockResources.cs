@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Haulage.Model.Constants
 {
     public class MockResources
-    { 
+    {
 
         //Placeholder until user implementation
         public static Customer mockCustomer = new Customer("customer1", "Alicia", "Keys");
@@ -18,12 +18,12 @@ namespace Haulage.Model.Constants
 
         // In real system mapping for inheritance would be necessary to support sqlite as the database 
         // However for the mocks it is easier to enter them to DB with their default type
-        public static User mockDriver1 = new(Role.DRIVER,"driver1", "Jane", "Doe");
+        public static User mockDriver1 = new(Role.DRIVER, "driver1", "Jane", "Doe");
         public static User mockDriver2 = new(Role.DRIVER, "driver2", "John", "Smith");
 
         //Same as for drivers but for transport
         public Transport transport1 = new Transport("Volvo", 500);
-        public Transport transport2 = new Transport("Nissan",500);
+        public Transport transport2 = new Transport("Nissan", 500);
         public Transport transport3 = new Transport("Solaris", 18.000);
         public static Admin mockAdmin = new Admin("admin1", "Master", "Admin");
         public static Warehouse warehouse = new Warehouse(12.12, 12.12);
@@ -40,13 +40,13 @@ namespace Haulage.Model.Constants
             new ManifestItem(new Item("1845678901002", "Hobby Paint 1L", 13.55), 1),
             new ManifestItem(new Item("1845678901003", "Hobby Paints 500ml", 8.80), 1)];
 
-         
-      
+
+
 
         public void CreateMockResources()
         {
             CustomerOrder order1 = new CustomerOrder(new Manifest(ManifestItems), mockCustomer.Login, warehouse.Id);
-            CustomerOrder order2 =  new CustomerOrder(new Manifest(ManifestItems), mockCustomer.Login, warehouse.Id);
+            CustomerOrder order2 = new CustomerOrder(new Manifest(ManifestItems), mockCustomer.Login, warehouse.Id);
             CustomerOrder order3 = new CustomerOrder(new Manifest(ManifestItems), mockCustomer.Login, warehouse.Id);
             CustomerOrder order4 = new CustomerOrder(new Manifest(ManifestItems), "AnotherCustomer", warehouse.Id);
             DeliveryAddress deliveryAddress1 = new DeliveryAddress(order1.Id, 13.13, 13.14);
@@ -54,16 +54,35 @@ namespace Haulage.Model.Constants
             DeliveryAddress deliveryAddress3 = new DeliveryAddress(order3.Id, 15.15, 15.16);
             DeliveryAddress deliveryAddress4 = new DeliveryAddress(order4.Id, 16.16, 16.17);
 
-            TripStop[] stopArr1 = [new TripStop(order1, deliveryAddress1)];
+            // Create trip stops
+            TripStop[] stopArr1 = { new TripStop(order1, deliveryAddress1) };
+            TripStop[] stopArr2 = {
+        new TripStop(order2, deliveryAddress2),
+        new TripStop(order3, deliveryAddress3),
+        new TripStop(order1, deliveryAddress3)
+    };
+            TripStop[] stopArr3 = { new TripStop(order4, deliveryAddress4) };
 
-            TripStop[] stopArr2 = [new TripStop(order2, deliveryAddress2),
-            new TripStop(order3, deliveryAddress3),
-             new TripStop(order1, deliveryAddress3)];
-
-            TripStop[] stopArr3 = [new TripStop(order4, deliveryAddress4)];
+            // Create trips
             Trip trip1 = new Trip(stopArr1, warehouse.Longitude, warehouse.Latitude);
             Trip trip2 = new Trip(stopArr2, warehouse.Longitude, warehouse.Latitude);
             Trip trip3 = new Trip(stopArr3, warehouse.Longitude, warehouse.Latitude);
+
+            // Insert data into the database
+            InsertIfNotExists(trip1);
+            InsertIfNotExists(trip2);
+            InsertIfNotExists(trip3);
+        }
+        private void InsertIfNotExists(Trip trip)
+        {
+            var existingTrip = DB.connection.Table<Trip>().FirstOrDefault(t => t.Id == trip.Id);
+            if (existingTrip == null)
+            {
+                DB.connection.Insert(trip);
+                DB.connection.InsertAll(trip.Stops); // Make sure Trip.Stops is a List<TripStop> or similar
+            }
         }
     }
 }
+
+

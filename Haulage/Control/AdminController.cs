@@ -36,7 +36,7 @@ namespace Haulage.Control
                 }
 
                 var trip = TripController.GetTripWithDetails(id);
-                if (trip == null || trip.Stops == null || trip.Stops.Length == 0)
+                if (trip == null || trip.Stops == null || trip.Stops.Count == 0)
                 {
                     throw new Exception("No trip or stops for the trip were found");
                 }

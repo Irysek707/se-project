@@ -4,10 +4,10 @@
              x:Class="Haulage.View.DriverPage"
              Title="DriverPage">
     <VerticalStackLayout>
-        <Label x:Name="ErrorMessage"></Label>
+        <Label x:Name="ErrorMessage" TextColor="Red"></Label>
         <Label x:Name="UserName"
-          VerticalOptions="Center" 
-          HorizontalOptions="Center" />
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
         <ListView x:Name="Trips" ItemSelected="Trips_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -17,15 +17,40 @@
                             <Label Text="{Binding ScheduledDuration}" Margin="10,0,0,0"></Label>
                             <Label Text="{Binding NumberOfStops}" Margin="10,0,0,0"></Label>
                             <Label Text="{Binding TripStatus}" Margin="10,0,0,0"></Label>
-                            <Label Text="{Binding VehicleId}" Margin="10,0,0,0"></Label>
                         </HorizontalStackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
+        <!-- Header for the list of stops within the selected trip -->
+        <Label Text="Select a stop" FontSize="Medium" HorizontalOptions="Center" />
+
+        <!-- ListView for displaying stops within the selected trip -->
+        <ListView x:Name="StopsListView" ItemSelected="Stops_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Address}" />
+                            <Label Text="{Binding Status}" Margin="10,0,0,0" />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Button to confirm pickup/delivery -->
+        <Button Text="Confirm Pickup/Delivery"
+                Clicked="ConfirmPickupDelivery_Clicked"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="Confirm the selected pickup/delivery" />
+
+        <!-- Spacer -->
         <BoxView HeightRequest="20" Color="Transparent"/>
 
+        <!-- Button to navigate back to the main page -->
         <Button Text="Back to Main Page"
                 Clicked="BackToMainPage"
                 VerticalOptions="Center"

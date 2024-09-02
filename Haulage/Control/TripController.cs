@@ -11,6 +11,8 @@ namespace Haulage.Control
 {
     class TripController
     {
+        // Use the existing connection object from DB
+        private static SQLiteConnection dbConnection = DB.connection;
 
         public static List<Trip> GetAllTrips()
         {
@@ -47,6 +49,7 @@ namespace Haulage.Control
             }
         }
 
+
         public static Trip GetTripWithDetails(string tripId)
         {
             try
@@ -55,7 +58,7 @@ namespace Haulage.Control
                 SQLiteCommand comm = new SQLiteCommand(DB.connection);
                 comm.CommandText = DBHelpers.FormatSQL("SELECT [Id],[ScheduledDuration],[TripStatus],[NumberOfStops],[Driver]  FROM [Trip]  WHERE Id = '", tripId);
                 List<Trip> trips = comm.ExecuteQuery<Trip>().ToList();
-                if(trips.Count > 1)
+                if (trips.Count > 1)
                 {
                     throw new Exception("Too many trips with the same id");
                 }
@@ -78,11 +81,11 @@ namespace Haulage.Control
                     {
                         throw new Exception("Too many addresses for a single order");
                     }
-                    stop.setDeliveryAddress(deliveryAddress[0]);
+                    stop.SetDeliveryAddress(deliveryAddress[0]);
                     CustomerOrder order = OrderController.getCustomerOrderContinueTransaction(stop.OrderId.ToString());
-                    stop.setOrder(order);
+                    stop.SetOrder(order);
                 });
-                trip.setStops(stops);
+                trip.SetStops(stops);
                 DB.connection.Commit();
                 return trip;
             }
