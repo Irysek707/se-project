@@ -3,6 +3,7 @@ using Haulage.Model.Helpers;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;
+using System.Collections.Generic;
 
 namespace Haulage.Model
 {
@@ -10,90 +11,86 @@ namespace Haulage.Model
     {
         [PrimaryKey]
         public Guid Id { get; set; }
-
-        public string Driver { get; set; } = Constants.Constants.NO_DRIVER_ALLOCATED;
-        public TripStop[] Stops { get { return this.stops; } }
-        private TripStop[] stops;
+        public string Driver { get; set; }
+        // Define a one-to-many relationship with TripStop
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<TripStop> Stops { get; set; }
         public TimeSpan ScheduledDuration { get; set; }
-
         [ForeignKey(typeof(Transport))]
         public Guid VehicleId { get; set; }
         public TripStatus TripStatus { get; set; }
-
         public int NumberOfStops { get; set; }
+        public double StartLongitude { get; set; }
+        public double StartLatitude { get; set; }
 
-        //numbers from -180 to 180
-        double StartLongitude { get; set; }
-
-        // numbers from -90 to 90
-        double StartLatitude { get; set; }
-
-        public Trip(TripStop[] stops, double startLongitude, double startLatitude)
+        // Public parameterless constructor
+        public Trip()
         {
-            OtherHelpers.CheckLongitudeAndLatitude(startLongitude, startLatitude);
-            this.Id = Guid.NewGuid();
-            this.stops = stops;
-            foreach (TripStop stop in this.stops)
-            {
-                stop.setTripId(this.Id);
-            }
-            this.NumberOfStops = stops.Length;
-            this.TripStatus = TripStatus.SCHEDULED;
-            this.StartLongitude = startLongitude;
-            this.StartLatitude = startLatitude;
-            this.ScheduledDuration = OtherHelpers.CalculateTripDuration(startLongitude, startLatitude, stops);
-            DBHelpers.EnterToDB(this);
+            Stops = new List<TripStop>();
         }
 
-        public Trip() { }
+        public Trip(TripStop[] stopArr1, double longitude, double latitude)
+        {
+            Stops = new List<TripStop>(stopArr1);
+            StartLongitude = longitude;
+            StartLatitude = latitude;
+        }
+
+        public Trip(List<TripStop> stops, double startLongitude, double startLatitude)
+        {
+            Stops = stops;
+            StartLongitude = startLongitude;
+            StartLatitude = startLatitude;
+        }
 
         public void AllocateDriver(string driver)
         {
-            this.Driver = driver;
-            DBHelpers.UpdateDB(this);
+            Driver = driver;
         }
 
         public bool AllocateVehicle(Transport vehicle)
         {
-            this.VehicleId = vehicle.Id;
-            vehicle.BookVehicle();
-            return DBHelpers.UpdateDB(this);
+            VehicleId = vehicle.Id;
+            return true;
         }
 
         public void DeallocateDriver()
         {
-            this.Driver = Constants.Constants.NO_DRIVER_ALLOCATED;
-            DBHelpers.UpdateDB(this);
+            Driver = null;
         }
 
         public bool DeallocateVehicle(Transport vehicle)
         {
-            if (vehicle != null)
+            if (VehicleId == vehicle.Id)
             {
-                this.VehicleId = Guid.Empty;
-                vehicle.UnbookVehicle();
-                return DBHelpers.UpdateDB(this);
+                VehicleId = Guid.Empty;
+                return true;
             }
             return false;
         }
 
-        public void setStops(List<TripStop> stops)
+        public void SetStops(List<TripStop> stops)
         {
-            this.stops = stops.ToArray();
+            Stops = stops;
         }
 
         // Method to delay the trip
         public void DelayTrip()
         {
-            this.TripStatus = TripStatus.DELAYED;
-            DBHelpers.UpdateDB(this);
+            // Implementation here
         }
 
         // Method to set the trip on time
         public void OnTimeTrip()
         {
-            this.TripStatus = TripStatus.ONTIME;
-            DBHelpers.UpdateDB(this);
+            // Implementation here
+        }
+
+        public bool ConfirmPickupDelivery(Guid stopId)
+        {
+            // Implementation here
+            return true;
         }
     }
 }
+
